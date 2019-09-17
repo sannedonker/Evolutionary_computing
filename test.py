@@ -4,6 +4,7 @@ sys.path.insert(0, "evoman")
 from demo_controller import player_controller
 from environment import Environment
 
+import crossovers
 import tournaments
 
 import numpy as np
@@ -76,4 +77,5 @@ else:
     beginpop_f = env.solutions[1]
 
 # evolution process
-tournaments.choosing_parents_kway(beginpop, beginpop_f, N, K)
+# tournaments.choose_parents_kway(beginpop, beginpop_f, N, K)
+# crossovers.crossover(beginpop[0], beginpop[1])

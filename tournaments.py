@@ -1,7 +1,7 @@
 import numpy as np
 from random import randint
 
-def choosing_parents_kway(pop, pop_f, n, k):
+def choose_parents_kway(pop, pop_f, n, k):
     """
     Choose which individuals become parents with a K-way tournament
     Input: population, number of contestents: K
@@ -29,3 +29,8 @@ def choosing_parents_kway(pop, pop_f, n, k):
         parents.append(pop[winner])
 
     return parents
+
+def choose_new_generation(pop, pop_f):
+    """"
+    sdfsdf
+    """
