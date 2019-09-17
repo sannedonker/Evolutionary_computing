@@ -3,6 +3,7 @@ sys.path.insert(0, "evoman")
 
 from demo_controller import player_controller
 from environment import Environment
+from mutations import non_uni_mutation
 
 import numpy as np
 
@@ -46,16 +47,16 @@ def run_simulation(env, pop):
 
 # beginpop and corresponding data
 beginpop = np.random.uniform(BOUND_MIN, BOUND_MAX, (N, N_VARS))
-beginpop_f = run_simulation(env, beginpop)[0]
-best_f = max(beginpop_f)
-best_position = beginpop_f.index(max(beginpop_f))
-average = np.mean(beginpop_f)
-std = np.std(beginpop_f)
-
-# saves results for begin population
-file_aux  = open(experiment_name + "/results.txt", "a")
-file_aux.write(str(beginpop[best_position]) + " " + str(beginpop_f[best_position]))
-file_aux.close()
+#beginpop_f = run_simulation(env, beginpop)[0]
+#best_f = max(beginpop_f)
+#best_position = beginpop_f.index(max(beginpop_f))
+#average = np.mean(beginpop_f)
+#std = np.std(beginpop_f)
+#
+## saves results for begin population
+#file_aux  = open(experiment_name + "/results.txt", "a")
+#file_aux.write(str(beginpop[best_position]) + " " + str(beginpop_f[best_position]))
+#file_aux.close()
 
 # evolution process
 def choosing_parents_kway(pop, pop_f):
@@ -91,4 +92,5 @@ def choosing_parents_kway(pop, pop_f):
     print(parents)
     return parents
 
-# choosing_parents_kway(beginpop, beginpop_f)
+# run the mutation thing
+non_uni_mutation(beginpop, env)
