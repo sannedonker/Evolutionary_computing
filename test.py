@@ -4,9 +4,13 @@ sys.path.insert(0, "evoman")
 from demo_controller import player_controller
 from environment import Environment
 
+import tournaments
+
 import numpy as np
+from random import randint
 
 # parameters
+K = 3
 N = 10
 BOUND_MAX = 1
 BOUND_MIN = -1
@@ -58,37 +62,4 @@ file_aux.write(str(beginpop[best_position]) + " " + str(beginpop_f[best_position
 file_aux.close()
 
 # evolution process
-def choosing_parents_kway(pop, pop_f):
-    """
-    Choose parents with a K-way tournament
-    Input: population, number of contestents: K
-    Output: list of parents
-    """
-    parents = []
-    for i in range(N):
-
-        # choose K individuals that will enter the tournament
-        battlefield = []
-        for j in range(K):
-
-            # choose random individual, remove from population, add to battlefield
-            chosen = random.choice(pop)
-            index = pop.index(chosen)
-            fitness = pop_f[index]
-            pop.remove(chosen)
-            pop_f.remove(fitness)
-            battlefield.append((chosen, fitness))
-
-        # choose winner, add winner to the parents
-        winner = sorted(battlefield, key=itemgetter(1))[-1][0]
-        parents.append(winner)
-
-        # put contestents and corresponding fitness back in the population
-        for j in range(K):
-            pop.append(battlefield[j][0])
-            pop_f.append(battlefield[j][1])
-
-    print(parents)
-    return parents
-
-# choosing_parents_kway(beginpop, beginpop_f)
+tournaments.choosing_parents_kway(beginpop, beginpop_f, N, K)
