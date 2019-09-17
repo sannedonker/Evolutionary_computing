@@ -3,6 +3,7 @@ sys.path.insert(0, "evoman")
 
 from demo_controller import player_controller
 from environment import Environment
+from mutations import non_uni_mutation
 
 import crossovers
 import tournaments
@@ -44,12 +45,6 @@ def run_simulation(env, pop):
     return pop_f, pop_pl, pop_el, pop_t
 
 # TODO
-# tournament parents
-# crossover
-# mutatie
-# tournament surviving
-
-# TODO
 # eventjes dit zodat die niet godverdomme de hele tijd alles moet doorlopen
 # wel best wat dingen gekopieerd van haar dus moeten we nog wel echt even eigen maken
 if not os.path.exists(experiment_name+'/results.txt'):
@@ -79,3 +74,4 @@ else:
 # evolution process
 # tournaments.choose_parents_kway(beginpop, beginpop_f, N, K)
 # crossovers.crossover(beginpop[0], beginpop[1])
+#non_uni_mutation(beginpop, env)
