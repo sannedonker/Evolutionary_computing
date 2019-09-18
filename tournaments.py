@@ -13,10 +13,13 @@ def choose_parents_kway(pop, pop_f, n, k):
         # choose K individuals that will enter the tournament
         tournament = []
         contestents = []
+
+
         for j in range(k):
 
             # make sure every individual can only compete once per tournament
             contestent = randint(0, n - 1 - j)
+
             while contestent in contestents:
                 contestent = randint(0, n - 1 - j)
             contestents.append(contestent)
@@ -30,7 +33,19 @@ def choose_parents_kway(pop, pop_f, n, k):
 
     return parents
 
+
 def choose_new_generation(pop, pop_f):
     """"
     sdfsdf
     """
+
+def choose_pairs(parents, i):
+    """
+    Choose 2 parents from the whole generation of parents.
+    This pair is then used in crossover(parent1, parent2)
+    """
+
+    parent1 = parents[i]
+    parent2 = parents[i + 1]
+
+    return parent1, parent2

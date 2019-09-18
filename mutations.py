@@ -5,12 +5,13 @@ MUTATION_SIG = 0.01
 
 
 def non_uni_mutation(pop, env):
-    
+
     # TODO: kiezen of je eerst individuen voor mutatie wilt selecteren en daarna per gen ook nog wilt selecteren
     # of of je per gen gewoon wilt selecteren, dan kunnen er ook individuen zijn met meerdere mutaties.
     # dat laatste lijkt me beter omdat het meer random is.
     # daarna nog kijken of ik dat self-adaptive mutation ook nog wil toepassen
     changed = 0
+
     for individual in pop:
         for gene in individual:
             chance = np.random.uniform(0, 1)
@@ -38,7 +39,7 @@ def non_uni_mutation(pop, env):
 #            changed +=1
 #        else:
 #            print("helaas")
-            
+
     if changed > 0:
         pop_f = evaluate(env, pop)[0]
         print("OLD MEAN")
@@ -49,8 +50,8 @@ def non_uni_mutation(pop, env):
         print(np.mean(pop_f))
         print("new best")
         print(max(pop_f))
-    
-        
+
+
 def evaluate(env, pop):
     pop_f = []
     pop_pl = []

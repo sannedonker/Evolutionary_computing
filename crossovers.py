@@ -1,7 +1,6 @@
 """
-HIEP HOI
-
-bestandje met crossoversssss alleen nog even geen zin om na te denken. GROETJES
+Run crossover with two parents (parent1 and parent2).
+Returns two children (child1 and child2).
 """
 import random
 import numpy as np
@@ -12,6 +11,8 @@ def crossover(parent1, parent2):
     at that position and combine them in that point
     """
     # TODO: magic numbers weg --> deze nummers onderbouwen
+    print("Parent1:", parent1)
+    print("Parent2:", parent2)
     probality = random.uniform(0.6, 0.9)
     cut = probality * len(parent1)
     cut = int(cut)

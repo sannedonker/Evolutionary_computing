@@ -17,6 +17,8 @@ N = 10
 BOUND_MAX = 1
 BOUND_MIN = -1
 ENEMY_NR = [2]
+NUM_GENERATIONS = 3
+offspring_size = 10
 
 experiment_name = "TESTEN"
 if not os.path.exists(experiment_name):
@@ -24,7 +26,9 @@ if not os.path.exists(experiment_name):
 
 env = Environment(experiment_name = experiment_name,
                   enemies = ENEMY_NR,
-                  player_controller = player_controller())
+                  player_controller = player_controller(),
+                  speed = "fastest",
+                  savelogs="no")
 
 # TODO: snappen wat en hoe
 N_HIDDEN = 10
@@ -63,8 +67,8 @@ if not os.path.exists(experiment_name+'/results.txt'):
     file_aux.close()
 
     solutions = [beginpop, beginpop_f]
-    env.update_solutions(solutions)
-    env.save_state()
+    # env.update_solutions(solutions)
+    # env.save_state()
 
 else:
     env.load_state()
@@ -72,6 +76,40 @@ else:
     beginpop_f = env.solutions[1]
 
 # evolution process
-# tournaments.choose_parents_kway(beginpop, beginpop_f, N, K)
-# crossovers.crossover(beginpop[0], beginpop[1])
-#non_uni_mutation(beginpop, env)
+
+def evolution_process():
+    """
+    EVOLUTION PROCESS:
+    Fitness calculation > mating pool > parents selection,
+    Mating (crossover and mutation) > offspring.
+    """
+
+    parents = tournaments.choose_parents_kway(beginpop, beginpop_f, N, K)
+
+    new_pop = []
+
+    # Choose parent pairs for tournament
+    for i in range(offspring_size - 1):
+
+        # TODO: bedenken hoe we de ouder-paren willen bepalen
+        # Nu is het alleen steeds [ouder1 + ouder2, ouder2 + ouder3...]
+        parent1, parent2 = tournaments.choose_pairs(parents, i)
+
+        # Perform crossover to get new children
+        child1, child2 = crossovers.crossover(parent1, parent2)
+
+        # Add children and parents to new population
+        new_pop.append(child1)
+        new_pop.append(child2)
+        new_pop.append(parent1)
+        new_pop.append(parent2)
+
+    print(new_pop, "NEW POPULATION")
+    print(len(new_pop))
+    exit()
+
+    # Mutate children
+    non_uni_mutation(new_pop, env)
+
+
+evolution_process()

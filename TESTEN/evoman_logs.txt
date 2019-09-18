@@ -39,3 +39,35 @@ PARAMETER CHANGE: logs = on
 PARAMETER CHANGE: savelogs = yes
 
 MESSAGE: state has been loaded.
+
+PARAMETER CHANGE: savelogs = yes
+
+MESSAGE: state has been loaded.
+
+PARAMETER CHANGE: savelogs = yes
+
+MESSAGE: state has been loaded.
+
+PARAMETER CHANGE: savelogs = yes
+
+MESSAGE: state has been loaded.
+
+PARAMETER CHANGE: savelogs = yes
+
+MESSAGE: state has been loaded.
+
+PARAMETER CHANGE: savelogs = yes
+
+MESSAGE: state has been loaded.
+
+PARAMETER CHANGE: savelogs = yes
+
+MESSAGE: state has been loaded.
+
+PARAMETER CHANGE: savelogs = yes
+
+MESSAGE: state has been loaded.
+
+PARAMETER CHANGE: savelogs = yes
+
+MESSAGE: state has been loaded.
