@@ -19,6 +19,7 @@ BOUND_MIN = -1
 ENEMY_NR = [2]
 NUM_GENERATIONS = 3
 offspring_size = 10
+nr_generations = 2
 
 experiment_name = "TESTEN"
 if not os.path.exists(experiment_name):
@@ -33,6 +34,7 @@ env = Environment(experiment_name = experiment_name,
 # TODO: snappen wat en hoe
 N_HIDDEN = 10
 N_VARS = (env.get_num_sensors()+1)*N_HIDDEN + (N_HIDDEN+1)*5 # multilayer with 10 hidden neurons
+
 
 def run_simulation(env, pop):
     pop_f = []
@@ -67,49 +69,61 @@ if not os.path.exists(experiment_name+'/results.txt'):
     file_aux.close()
 
     solutions = [beginpop, beginpop_f]
-    # env.update_solutions(solutions)
-    # env.save_state()
+    env.update_solutions(solutions)
+    env.save_state()
 
 else:
     env.load_state()
     beginpop = env.solutions[0]
     beginpop_f = env.solutions[1]
 
-# evolution process
 
-def evolution_process():
+# evolution process
+def evolution_process(nr_generations, beginpop, beginpop_f):
     """
     EVOLUTION PROCESS:
     Fitness calculation > mating pool > parents selection,
     Mating (crossover and mutation) > offspring.
     """
 
-    parents = tournaments.choose_parents_kway(beginpop, beginpop_f, N, K)
+    for i in range(nr_generations):
 
-    new_pop = []
+        # Start with random begin population
+        if i == 0:
+            pop, pop_f = beginpop, beginpop_f
 
-    # Choose parent pairs for tournament
-    for i in range(offspring_size - 1):
+        parents = tournaments.choose_parents_kway(pop, pop_f, N, K)
 
-        # TODO: bedenken hoe we de ouder-paren willen bepalen
-        # Nu is het alleen steeds [ouder1 + ouder2, ouder2 + ouder3...]
-        parent1, parent2 = tournaments.choose_pairs(parents, i)
+        new_pop = []
 
-        # Perform crossover to get new children
-        child1, child2 = crossovers.crossover(parent1, parent2)
+        # Choose parent pairs for tournament
+        for i in range(offspring_size):
 
-        # Add children and parents to new population
-        new_pop.append(child1)
-        new_pop.append(child2)
-        new_pop.append(parent1)
-        new_pop.append(parent2)
+            # TODO: bedenken hoe we de ouder-paren willen bepalen
+            # Nu is het alleen steeds [ouder1 + ouder2, ouder2 + ouder3...]
+            parent1, parent2 = tournaments.choose_pairs(parents, i, offspring_size)
 
-    print(new_pop, "NEW POPULATION")
-    print(len(new_pop))
-    exit()
+            # TODO: nu worden beide ouders aan populatie toegevoegd.
+            new_pop.append(parent1)
+            new_pop.append(parent2)
 
-    # Mutate children
-    non_uni_mutation(new_pop, env)
+            # Perform crossover to get new children
+            child1, child2 = crossovers.crossover(parent1, parent2)
 
+            # Add children and parents to new population
+            new_pop.append(child1)
 
-evolution_process()
+            # TODO: Kiezen of we alleen child1 of ook child2 willen toevoegen...
+            # new_pop.append(child2)
+
+        # Mutate children
+        pop, pop_f = non_uni_mutation(new_pop, env)
+        print(pop_f)
+        print("lengte van mutated population is nu 30 (2 x 10 ouders en 1 x 10 kindjes)")
+
+        solutions = [pop, pop_f]
+        env.update_solutions(solutions)
+        env.save_state()
+    # exit()
+
+evolution_process(nr_generations, beginpop, beginpop_f)

@@ -51,6 +51,7 @@ def non_uni_mutation(pop, env):
         print("new best")
         print(max(pop_f))
 
+    return pop, pop_f
 
 def evaluate(env, pop):
     pop_f = []

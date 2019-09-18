@@ -16,4 +16,4 @@ loadplayer yes
 loadenemy yes
 sound on
 logs on
-savelogs yes
+savelogs no

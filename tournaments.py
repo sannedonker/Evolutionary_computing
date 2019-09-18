@@ -36,16 +36,22 @@ def choose_parents_kway(pop, pop_f, n, k):
 
 def choose_new_generation(pop, pop_f):
     """"
-    sdfsdf
+    Select best individuals in current generation as parents
+    to produce the offspring of next generation.
     """
 
-def choose_pairs(parents, i):
+    
+
+def choose_pairs(parents, i, offspring_size):
     """
     Choose 2 parents from the whole generation of parents.
     This pair is then used in crossover(parent1, parent2)
     """
 
     parent1 = parents[i]
+
+    if i == offspring_size - 1:
+        i = 0
     parent2 = parents[i + 1]
 
     return parent1, parent2
