@@ -1,5 +1,5 @@
 import numpy as np
-from random import randint
+import random
 
 def choose_parents_kway(pop, pop_f, n, k):
     """
@@ -34,13 +34,54 @@ def choose_parents_kway(pop, pop_f, n, k):
     return parents
 
 
-def choose_new_generation(pop, pop_f):
+def choose_survivors(pop, pop_f, n):
     """"
-    Select best individuals in current generation as parents
-    to produce the offspring of next generation.
+    First kill the worst quarter of the generation.
+    Then kill a random quarter of the generation.
     """
 
-    
+    # sorted_f = [x for _, x in sorted(zip(pop_f, pop))]
+    test = np.asarray([3, 2, 1])
+    hoi = np.asarray([4, 5, 6])
+
+    # zipped_together = zip(pop_f, pop)
+    # zipped_together.sort()
+    # sorted_pop = [i for pop_f, i in zipped_together]
+    # sorted_f = pop_f.sort()
+    #
+    # print(sorted_f)
+
+
+    # print(test[test.argsort()])
+    # print(hoi[test.argsort()])
+    #
+    sorting = np.asarray(pop_f).argsort()
+    sorted_pop = np.asarray(pop)[sorting]
+    sorted_f = np.asarray(pop_f)[sorting]
+
+    sorted_pop = np.ndarray.tolist(sorted_pop)
+    sorted_f = np.ndarray.tolist(sorted_f)
+
+    print(len(pop))
+
+    quarter = int(n / 2)
+    print(int(n / 2))
+    survivors = sorted_pop[quarter:]
+
+    # print(survivors)
+    # print(type(survivors))
+
+
+    for i in range(quarter):
+        killed = random.randint(0, n - quarter - i)
+        # print(survivors[killed])
+        survivors.remove(survivors[killed])
+
+    print(len(sorted_pop))
+    print(len(survivors))
+
+
+
 
 def choose_pairs(parents, i, offspring_size):
     """

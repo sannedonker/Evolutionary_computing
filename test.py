@@ -126,4 +126,5 @@ def evolution_process(nr_generations, beginpop, beginpop_f):
         env.save_state()
     # exit()
 
-evolution_process(nr_generations, beginpop, beginpop_f)
+# evolution_process(nr_generations, beginpop, beginpop_f)
+# tournaments.choose_survivors(beginpop, beginpop_f, n)
