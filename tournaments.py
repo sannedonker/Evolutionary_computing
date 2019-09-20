@@ -1,5 +1,5 @@
 import numpy as np
-from random import randint
+import random
 
 def choose_parents_kway(pop, pop_f, n, k):
     """
@@ -18,10 +18,10 @@ def choose_parents_kway(pop, pop_f, n, k):
         for j in range(k):
 
             # make sure every individual can only compete once per tournament
-            contestent = randint(0, n - 1 - j)
+            contestent = random.randint(0, n - 1 - j)
 
             while contestent in contestents:
-                contestent = randint(0, n - 1 - j)
+                contestent = random.randint(0, n - 1 - j)
             contestents.append(contestent)
 
         for j in contestents:
@@ -34,11 +34,35 @@ def choose_parents_kway(pop, pop_f, n, k):
     return parents
 
 
-def choose_new_generation(pop, pop_f):
+def choose_survivors(pop, pop_f):
     """"
-    Select best individuals in current generation as parents
-    to produce the offspring of next generation.
+    First kill the worst quarter of the generation.
+    Then kill a random quarter of the generation.
     """
+
+    # sort pop_f and then sort pop similarly
+    # evt TODO: nu mega omslachtig maar alles lukte even neit en dat was kut
+    sorting = np.asarray(pop_f).argsort()
+    sorted_pop = np.asarray(pop)[sorting]
+    sorted_f = np.asarray(pop_f)[sorting]
+    sorted_pop = np.ndarray.tolist(sorted_pop)
+    sorted_f = np.ndarray.tolist(sorted_f)
+
+    # kill worst quarter
+    quarter = int(len(pop) / 4)
+    survivors = sorted_pop[quarter:]
+
+    # kill a random quarter
+    for i in range(quarter):
+        kill = random.randint(0, len(pop) - quarter - i)
+        survivors.remove(survivors[kill])
+
+    # if less than half of the population is killed, kill more individuals
+    while len(pop) / 2 != len(survivors):
+        kill = random.randint(0, len(survivors))
+        survivors.remove(survivors[kill])
+
+    return(survivors)
 
 
 

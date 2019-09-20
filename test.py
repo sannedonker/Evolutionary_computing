@@ -120,8 +120,10 @@ def evolution_process(NUM_GENERATIONS, beginpop, beginpop_f):
             new_pop.append(child2)
 
         # Take half of population
-        cut = int(0.5 * len(new_pop))
-        new_pop = new_pop[:cut]
+         cut = int(0.5 * len(new_pop))
+         new_pop = new_pop[:cut]
+#        tournaments.choose_survivors(beginpop, beginpop_f)
+
 
         # Mutate children
         pop, pop_f = non_uni_mutation(new_pop, env)
