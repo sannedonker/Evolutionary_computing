@@ -17,39 +17,10 @@ def non_uni_mutation(pop, env):
             chance = np.random.uniform(0, 1)
             if chance <= MUTATION_P:
                 changed +=1
-                print("GENE NOW:")
-                print(gene)
                 mutation_value = np.random.uniform(-MUTATION_SIG, MUTATION_SIG)
                 gene = gene + mutation_value
-                print("changing with value of:")
-                print(mutation_value)
-                print("Gene after:")
-                print(gene)
-#        chance = np.random.uniform(0, 1)
-#        if chance <= MUTATION_P:
-#            print("GENE NOW:")
-#            change_gene = round(np.random.uniform(0, 265))
-#            print(individual[change_gene])
-#            mutation_value = np.random.uniform(-MUTATION_SIG, MUTATION_SIG)
-#            individual[change_gene] = individual[change_gene] + mutation_value
-#            print("changing with value of:")
-#            print(mutation_value)
-#            print("GENE NOW:")
-#            print(individual[change_gene])
-#            changed +=1
-#        else:
-#            print("helaas")
 
-    if changed > 0:
-        pop_f = evaluate(env, pop)[0]
-        print("OLD MEAN")
-        print(np.mean(env.solutions[1]))
-        print("old best")
-        print(max(env.solutions[1]))
-        print("NEW MEAN")
-        print(np.mean(pop_f))
-        print("new best")
-        print(max(pop_f))
+    pop_f = evaluate(env, pop)[0]
 
     return pop, pop_f
 

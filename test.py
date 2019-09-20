@@ -4,6 +4,7 @@ sys.path.insert(0, "evoman")
 from demo_controller import player_controller
 from environment import Environment
 from mutations import non_uni_mutation
+from analyse import plot
 
 import crossovers
 import tournaments
@@ -19,7 +20,7 @@ BOUND_MIN = -1
 ENEMY_NR = [2]
 NUM_GENERATIONS = 3
 OFSPRING_SIZE = 10
-nr_generations = 2
+#nr_generations = 2
 
 experiment_name = "TESTEN"
 if not os.path.exists(experiment_name):
@@ -79,19 +80,24 @@ else:
 
 
 # evolution process
-def evolution_process(nr_generations, beginpop, beginpop_f):
+def evolution_process(NUM_GENERATIONS, beginpop, beginpop_f):
     """
     EVOLUTION PROCESS:
     Fitness calculation > mating pool > parents selection,
     Mating (crossover and mutation) > offspring.
     """
+    
+    # Keep track of maximum fitness over generations
+    f_max = []
 
-    for i in range(nr_generations):
+    for i in range(NUM_GENERATIONS):
 
         # Start with random begin population
         if i == 0:
             pop, pop_f = beginpop, beginpop_f
-
+        
+            f_max.append(max(pop_f))
+            
         parents = tournaments.choose_parents_kway(pop, pop_f, N, K)
 
         new_pop = []
@@ -123,7 +129,9 @@ def evolution_process(nr_generations, beginpop, beginpop_f):
 
         solutions = [pop, pop_f]
         env.update_solutions(solutions)
+        f_max.append(max(pop_f))
         env.save_state()
+    plot(NUM_GENERATIONS, f_max)
     # exit()
 
-evolution_process(nr_generations, beginpop, beginpop_f)
+evolution_process(NUM_GENERATIONS, beginpop, beginpop_f)
