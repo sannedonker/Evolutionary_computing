@@ -18,7 +18,7 @@ BOUND_MAX = 1
 BOUND_MIN = -1
 ENEMY_NR = [2]
 NUM_GENERATIONS = 3
-offspring_size = 10
+OFSPRING_SIZE = 10
 nr_generations = 2
 
 experiment_name = "TESTEN"
@@ -97,34 +97,35 @@ def evolution_process(nr_generations, beginpop, beginpop_f):
         new_pop = []
 
         # Choose parent pairs for tournament
-        for i in range(offspring_size):
+        for i in range(int(N/2)):
 
             # TODO: bedenken hoe we de ouder-paren willen bepalen
             # Nu is het alleen steeds [ouder1 + ouder2, ouder2 + ouder3...]
-            parent1, parent2 = tournaments.choose_pairs(parents, i, offspring_size)
-
-            # TODO: nu worden beide ouders aan populatie toegevoegd.
-            new_pop.append(parent1)
-            new_pop.append(parent2)
+            parent1, parent2 = tournaments.choose_pairs(parents, i)
+            i = i + 2
 
             # Perform crossover to get new children
             child1, child2 = crossovers.crossover(parent1, parent2)
 
             # Add children and parents to new population
+            new_pop.append(parent1)
+            new_pop.append(parent2)
             new_pop.append(child1)
+            new_pop.append(child2)
 
-            # TODO: Kiezen of we alleen child1 of ook child2 willen toevoegen...
-            # new_pop.append(child2)
+        # Take half of population
+        # cut = int(0.5 * len(new_pop))
+        # new_pop = new_pop[:cut]
+        tournaments.choose_survivors(beginpop, beginpop_f)
+
 
         # Mutate children
         pop, pop_f = non_uni_mutation(new_pop, env)
-        print(pop_f)
-        print("lengte van mutated population is nu 30 (2 x 10 ouders en 1 x 10 kindjes)")
+        print(len(pop), "LENGTH NEW POP")
 
         solutions = [pop, pop_f]
         env.update_solutions(solutions)
         env.save_state()
     # exit()
 
-# evolution_process(nr_generations, beginpop, beginpop_f)
-# tournaments.choose_survivors(beginpop, beginpop_f, n)
+evolution_process(nr_generations, beginpop, beginpop_f)
