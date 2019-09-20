@@ -59,7 +59,7 @@ def choose_survivors(pop, pop_f):
 
     # if less than half of the population is killed, kill more individuals
     while len(pop) / 2 != len(survivors):
-        kill = random.randint(0, len(survivors) - quarter - i)
+        kill = random.randint(0, len(survivors))
         survivors.remove(survivors[kill])
 
     return(survivors)
