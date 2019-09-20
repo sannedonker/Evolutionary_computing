@@ -40,18 +40,18 @@ def choose_new_generation(pop, pop_f):
     to produce the offspring of next generation.
     """
 
-    
 
-def choose_pairs(parents, i, offspring_size):
+
+def choose_pairs(parents, i):
     """
     Choose 2 parents from the whole generation of parents.
     This pair is then used in crossover(parent1, parent2)
+    TODO: REBECCA AFMAKEN
     """
 
     parent1 = parents[i]
-
-    if i == offspring_size - 1:
-        i = 0
+    # if i == offspring_size - 1:
+    #     i = 0
     parent2 = parents[i + 1]
 
     return parent1, parent2
