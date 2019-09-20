@@ -13,6 +13,8 @@ def non_uni_mutation(pop, env):
     changed = 0
 
     for individual in pop:
+        
+        #TODO: zorg dat na mutation de value niet buiten - 1 en 1 valt
         for gene in individual:
             chance = np.random.uniform(0, 1)
             if chance <= MUTATION_P:

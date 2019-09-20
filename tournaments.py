@@ -18,10 +18,14 @@ def choose_parents_kway(pop, pop_f, n, k):
         for j in range(k):
 
             # make sure every individual can only compete once per tournament
-            contestent = random.randint(0, n - 1 - j)
+            
+            # @SANNE hier stond eerst random.randint(0, n - 1 - j), maar dat 
+            # heb ik weggehaald omdat hij anders bij een hogere k dichterbij N 
+            # heel lang in de loop blijft
+            contestent = random.randint(0, n - 1)
 
             while contestent in contestents:
-                contestent = random.randint(0, n - 1 - j)
+                contestent = random.randint(0, n - 1)
             contestents.append(contestent)
 
         for j in contestents:
@@ -51,18 +55,23 @@ def choose_survivors(pop, pop_f):
     # kill worst quarter
     quarter = int(len(pop) / 4)
     survivors = sorted_pop[quarter:]
+    survivor_fitness = sorted_f[quarter:]
 
     # kill a random quarter
     for i in range(quarter):
-        kill = random.randint(0, len(pop) - quarter - i)
+        kill = random.randint(0, len(survivors) - 1)
         survivors.remove(survivors[kill])
+        survivor_fitness.remove(survivor_fitness[kill])
 
     # if less than half of the population is killed, kill more individuals
     while len(pop) / 2 != len(survivors):
-        kill = random.randint(0, len(survivors))
+        kill = random.randint(0, len(survivors) - 1)
         survivors.remove(survivors[kill])
+        survivor_fitness.remove(survivor_fitness[kill])
+        
+    survivors = np.array(survivors)
 
-    return(survivors)
+    return(survivors, survivor_fitness)
 
 
 
