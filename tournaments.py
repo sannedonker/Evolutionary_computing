@@ -53,6 +53,7 @@ def choose_survivors(pop, pop_f):
     survivors = sorted_pop[quarter:]
 
     # kill a random quarter
+    # TODO: de error weghalen oeepsieeee
     for i in range(quarter):
         kill = random.randint(0, len(pop) - quarter - i)
         survivors.remove(survivors[kill])
