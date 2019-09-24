@@ -3,7 +3,7 @@ sys.path.insert(0, "evoman")
 
 from demo_controller import player_controller
 from environment import Environment
-from mutations import non_uni_mutation
+from mutations import non_uni_mutation, uni_mutation
 from analyse import plot
 
 import crossovers
@@ -17,7 +17,7 @@ K = 3
 N = 10
 BOUND_MAX = 1
 BOUND_MIN = -1
-ENEMY_NR = [4]
+ENEMY_NR = [2]
 NUM_GENERATIONS = 3
 OFSPRING_SIZE = 10
 #nr_generations = 2
@@ -130,7 +130,7 @@ def evolution_process(NUM_GENERATIONS, beginpop, beginpop_f):
 #        new_pop = new_pop[:cut]
 
         # Mutate children and calculate new fitness
-        pop, pop_f = non_uni_mutation(new_pop, env)
+        pop, pop_f = non_uni_mutation(new_pop, env, BOUND_MIN, BOUND_MAX)
 
         # Choose the survivors, bring pop length back from 20 to 10
         pop, pop_f = tournaments.choose_survivors(pop, pop_f)
