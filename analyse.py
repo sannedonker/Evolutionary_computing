@@ -17,4 +17,4 @@ def plot(generations, f_max, f_mean):
     plt.ylabel(ylabel = 'fitness')
     plt.title(label = 'fitness over generatations')
     plt.legend()
-    plt.savefig("experiment.svg", dpi=150)
+    plt.savefig("experiment.pdf", dpi=150)
