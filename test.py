@@ -104,12 +104,15 @@ def evolution_process(NUM_GENERATIONS, beginpop, beginpop_f):
 
         new_pop = []
 
+        # TODO: dit gaat nu best omslachtig, misschien meer in de choose pairs
+        # functies zetten???
         # Choose parent pairs for tournament
         for i in range(int(N/2)):
 
             # TODO: bedenken hoe we de ouder-paren willen bepalen
             # Nu is het alleen steeds [ouder1 + ouder2, ouder2 + ouder3...]
-            parent1, parent2 = tournaments.choose_pairs(parents, i)
+            # parent1, parent2 = tournaments.choose_pairs(parents, i)
+            parent1, parent2 = tournaments.choose_sorted_pairs(parents, parents_f, i, N)
             i = i + 2
 
             # Perform crossover to get new children

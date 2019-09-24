@@ -109,10 +109,19 @@ def choose_survivors(pop, pop_f):
     return(survivors, survivor_fitness)
 
 
-def choose_sorted_pairs(parents, parents_f):
+def choose_sorted_pairs(parents, parents_f, i, pop_size):
     """
-    HOI EVEN SNEL: DIT GAAT ODUERS KIEZEN OP BASIS VAN FITNESS
+    Let the parents mate based on fitness
+    Worst parent mates with best parent
     """
+
+    parents, parents_f = sort_population(parents, parents_f)
+    parents = np.array(parents)
+
+    parent1 = parents[i]
+    parent2 = parents[pop_size - i - 1]
+
+    return parent1, parent2
 
 
 def choose_pairs(parents, i):
