@@ -1,12 +1,12 @@
 import numpy as np
 
-MUTATION_SIG = 0.01
+MUTATION_SIG = 0.2
 
 # TODO: Mutation hier ook tussen 1 / pop_size & 1 / chromosome_length?
 MUTATION_P = 0.1
 
 
-def non_uni_mutation(pop, env):
+def non_uni_mutation(pop, env, bound_min, bound_max):
 
     # TODO: kiezen of je eerst individuen voor mutatie wilt selecteren en daarna per gen ook nog wilt selecteren
     # of of je per gen gewoon wilt selecteren, dan kunnen er ook individuen zijn met meerdere mutaties.
@@ -24,6 +24,11 @@ def non_uni_mutation(pop, env):
                 changed +=1
                 mutation_value = np.random.uniform(-MUTATION_SIG, MUTATION_SIG)
                 pop[i][j] = pop[i][j] + mutation_value
+                
+                while pop[i][j] < bound_min:
+                    pop[i][j] = pop[i][j] / 2
+                while pop[i][j] > bound_max:
+                    pop[i][j] = pop[i][j] / 2
 
     pop_f = evaluate(env, pop)[0]
 
