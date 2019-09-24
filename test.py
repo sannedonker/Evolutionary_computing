@@ -13,7 +13,7 @@ import numpy as np
 from random import randint
 
 # parameters
-K = 6
+K = 3
 N = 10
 BOUND_MAX = 1
 BOUND_MIN = -1
@@ -86,7 +86,7 @@ def evolution_process(NUM_GENERATIONS, beginpop, beginpop_f):
     Fitness calculation > mating pool > parents selection,
     Mating (crossover and mutation) > offspring.
     """
-    
+
     # Keep track of max and mean fitness over generations
     f_max = []
     f_mean = []
@@ -96,11 +96,11 @@ def evolution_process(NUM_GENERATIONS, beginpop, beginpop_f):
         # Start with random begin population
         if i == 0:
             pop, pop_f = beginpop, beginpop_f
-        
+
             f_max.append(max(pop_f))
             f_mean.append(np.mean(pop_f))
-            
-        parents = tournaments.choose_parents_kway(pop, pop_f, N, K)
+
+        parents, parents_f = tournaments.choose_parents_kway(pop, pop_f, N, K)
 
         new_pop = []
 
@@ -126,24 +126,25 @@ def evolution_process(NUM_GENERATIONS, beginpop, beginpop_f):
 #        cut = int(0.5 * len(new_pop))
 #        new_pop = new_pop[:cut]
 
-        # Mutate children
+        # Mutate children and calculate new fitness
         pop, pop_f = non_uni_mutation(new_pop, env)
-        
+
         # Choose the survivors, bring pop length back from 20 to 10
         pop, pop_f = tournaments.choose_survivors(pop, pop_f)
-        
+
         solutions = [pop, pop_f]
         env.update_solutions(solutions)
-    
+
         # keep track of max and mean fitness for plot
         f_max.append(max(pop_f))
         f_mean.append(np.mean(pop_f))
-        
+
         env.save_state()
-        
+
     # plot figure with max and mean fitness over generations
     plot(NUM_GENERATIONS, f_max, f_mean)
-    
+
     # exit()
 
+# tournaments.choose_survivors(beginpop, beginpop_f)
 evolution_process(NUM_GENERATIONS, beginpop, beginpop_f)
