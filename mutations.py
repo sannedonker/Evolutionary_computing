@@ -1,7 +1,9 @@
 import numpy as np
 
-MUTATION_P = 0.1
 MUTATION_SIG = 0.01
+
+# TODO: Mutation hier ook tussen 1 / pop_size & 1 / chromosome_length?
+MUTATION_P = 0.1
 
 
 def non_uni_mutation(pop, env):
@@ -10,21 +12,47 @@ def non_uni_mutation(pop, env):
     # of of je per gen gewoon wilt selecteren, dan kunnen er ook individuen zijn met meerdere mutaties.
     # dat laatste lijkt me beter omdat het meer random is.
     # daarna nog kijken of ik dat self-adaptive mutation ook nog wil toepassen
+    
     changed = 0
 
-    for individual in pop:
+    for i in range(0, len(pop) - 1):
         
         #TODO: zorg dat na mutation de value niet buiten - 1 en 1 valt
-        for gene in individual:
+        for j in range(0, len(pop[i]) - 1):
             chance = np.random.uniform(0, 1)
             if chance <= MUTATION_P:
                 changed +=1
                 mutation_value = np.random.uniform(-MUTATION_SIG, MUTATION_SIG)
-                gene = gene + mutation_value
+                pop[i][j] = pop[i][j] + mutation_value
 
     pop_f = evaluate(env, pop)[0]
 
     return pop, pop_f
+
+def uni_mutation(pop, env, bound_min, bound_max):
+    
+    # replaces a value with a random generated value between the max and min bounds
+    
+    # Mutation p should be somewhere between 1 / pop_size and 1 / chromosome_length
+    pop_size = len(pop)
+#    chromosome_length = len(pop[0])
+    mutation_p = 1 / pop_size
+    
+    for i in range(0, len(pop) - 1):
+        for j in range(0, len(pop[i]) - 1):
+            chance = np.random.uniform(0, 1)
+            if chance <= mutation_p:
+                mutation_value = np.random.uniform(bound_min, bound_max)
+                pop[i][j] = mutation_value
+                
+    print(pop[0])
+                
+    pop_f = evaluate(env, pop)[0]
+    
+    return pop, pop_f
+    
+    
+
 
 def evaluate(env, pop):
     pop_f = []

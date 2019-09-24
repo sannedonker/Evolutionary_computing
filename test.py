@@ -3,7 +3,7 @@ sys.path.insert(0, "evoman")
 
 from demo_controller import player_controller
 from environment import Environment
-from mutations import non_uni_mutation
+from mutations import non_uni_mutation, uni_mutation
 from analyse import plot
 
 import crossovers
@@ -17,7 +17,7 @@ K = 6
 N = 10
 BOUND_MAX = 1
 BOUND_MIN = -1
-ENEMY_NR = [4]
+ENEMY_NR = [2]
 NUM_GENERATIONS = 3
 OFSPRING_SIZE = 10
 #nr_generations = 2
