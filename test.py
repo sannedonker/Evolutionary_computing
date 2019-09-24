@@ -4,6 +4,7 @@ sys.path.insert(0, "evoman")
 from demo_controller import player_controller
 from environment import Environment
 from mutations import non_uni_mutation
+from analyse import plot
 
 import crossovers
 import tournaments
@@ -12,14 +13,14 @@ import numpy as np
 from random import randint
 
 # parameters
-K = 3
+K = 6
 N = 10
 BOUND_MAX = 1
 BOUND_MIN = -1
-ENEMY_NR = [2]
+ENEMY_NR = [4]
 NUM_GENERATIONS = 3
 OFSPRING_SIZE = 10
-nr_generations = 2
+#nr_generations = 2
 
 experiment_name = "TESTEN"
 if not os.path.exists(experiment_name):
@@ -79,19 +80,26 @@ else:
 
 
 # evolution process
-def evolution_process(nr_generations, beginpop, beginpop_f):
+def evolution_process(NUM_GENERATIONS, beginpop, beginpop_f):
     """
     EVOLUTION PROCESS:
     Fitness calculation > mating pool > parents selection,
     Mating (crossover and mutation) > offspring.
     """
+    
+    # Keep track of max and mean fitness over generations
+    f_max = []
+    f_mean = []
 
-    for i in range(nr_generations):
+    for i in range(NUM_GENERATIONS):
 
         # Start with random begin population
         if i == 0:
             pop, pop_f = beginpop, beginpop_f
-
+        
+            f_max.append(max(pop_f))
+            f_mean.append(np.mean(pop_f))
+            
         parents = tournaments.choose_parents_kway(pop, pop_f, N, K)
 
         new_pop = []
@@ -113,19 +121,29 @@ def evolution_process(nr_generations, beginpop, beginpop_f):
             new_pop.append(child1)
             new_pop.append(child2)
 
+        #TODO: dit weghalen?
         # Take half of population
-        # cut = int(0.5 * len(new_pop))
-        # new_pop = new_pop[:cut]
-        tournaments.choose_survivors(beginpop, beginpop_f)
-
+#        cut = int(0.5 * len(new_pop))
+#        new_pop = new_pop[:cut]
 
         # Mutate children
         pop, pop_f = non_uni_mutation(new_pop, env)
-        print(len(pop), "LENGTH NEW POP")
-
+        
+        # Choose the survivors, bring pop length back from 20 to 10
+        pop, pop_f = tournaments.choose_survivors(pop, pop_f)
+        
         solutions = [pop, pop_f]
         env.update_solutions(solutions)
+    
+        # keep track of max and mean fitness for plot
+        f_max.append(max(pop_f))
+        f_mean.append(np.mean(pop_f))
+        
         env.save_state()
+        
+    # plot figure with max and mean fitness over generations
+    plot(NUM_GENERATIONS, f_max, f_mean)
+    
     # exit()
 
-evolution_process(nr_generations, beginpop, beginpop_f)
+evolution_process(NUM_GENERATIONS, beginpop, beginpop_f)
