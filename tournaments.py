@@ -3,6 +3,7 @@ import random
 
 CONVERGENCE = 3
 KEEP_PERCENTAGE = 10
+KILL_PART = 4
 
 def sort_population(pop, pop_f):
     """
@@ -80,8 +81,8 @@ def choose_survivors(pop, pop_f):
     must_survive_f = sorted_f[(len(pop) - top):]
     # print(must_survive_f)
 
-    # kill worst quarter
-    quarter = int(len(pop) / 4)
+    # kill worst part
+    quarter = int(len(pop) / KILL_PART)
     survivors = sorted_pop[quarter:]
     survivor_fitness = sorted_f[quarter:]
 
@@ -128,12 +129,9 @@ def choose_pairs(parents, i):
     """
     Choose 2 parents from the whole generation of parents.
     This pair is then used in crossover(parent1, parent2)
-    TODO: REBECCA AFMAKEN
     """
 
     parent1 = parents[i]
-    # if i == offspring_size - 1:
-    #     i = 0
     parent2 = parents[i + 1]
 
     return parent1, parent2

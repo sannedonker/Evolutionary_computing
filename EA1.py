@@ -8,21 +8,24 @@ from analyse import plot
 
 import crossovers
 import tournaments
+import time
 
 import numpy as np
 from random import randint
+from tournaments import sort_population
+
 
 # parameters
 K = 3
 N = 10
 BOUND_MAX = 1
 BOUND_MIN = -1
-ENEMY_NR = [2]
-NUM_GENERATIONS = 3
+ENEMY_NR = [3]
+NUM_GENERATIONS = 4
 OFSPRING_SIZE = 10
 #nr_generations = 2
 
-experiment_name = "TESTEN"
+experiment_name = "EA1_results"
 if not os.path.exists(experiment_name):
     os.makedirs(experiment_name)
 
@@ -32,9 +35,9 @@ env = Environment(experiment_name = experiment_name,
                   speed = "fastest",
                   savelogs="no")
 
-# TODO: snappen wat en hoe
 N_HIDDEN = 10
 N_VARS = (env.get_num_sensors()+1)*N_HIDDEN + (N_HIDDEN+1)*5 # multilayer with 10 hidden neurons
+
 
 
 def run_simulation(env, pop):
@@ -50,33 +53,6 @@ def run_simulation(env, pop):
         pop_t.append(time)
 
     return pop_f, pop_pl, pop_el, pop_t
-
-# TODO
-# eventjes dit zodat die niet godverdomme de hele tijd alles moet doorlopen
-# wel best wat dingen gekopieerd van haar dus moeten we nog wel echt even eigen maken
-if not os.path.exists(experiment_name+'/results.txt'):
-
-    # beginpop and corresponding data
-    beginpop = np.random.uniform(BOUND_MIN, BOUND_MAX, (N, N_VARS))
-    beginpop_f = run_simulation(env, beginpop)[0]
-    best_f = max(beginpop_f)
-    best_position = beginpop_f.index(max(beginpop_f))
-    average = np.mean(beginpop_f)
-    std = np.std(beginpop_f)
-
-    # saves results for begin population
-    file_aux  = open(experiment_name + "/results.txt", "a")
-    file_aux.write(str(beginpop[best_position]) + str(beginpop_f[best_position]))
-    file_aux.close()
-
-    solutions = [beginpop, beginpop_f]
-    env.update_solutions(solutions)
-    env.save_state()
-
-else:
-    env.load_state()
-    beginpop = env.solutions[0]
-    beginpop_f = env.solutions[1]
 
 
 # evolution process
@@ -109,9 +85,7 @@ def evolution_process(NUM_GENERATIONS, beginpop, beginpop_f):
         # Choose parent pairs for tournament
         for i in range(int(N/2)):
 
-            # TODO: bedenken hoe we de ouder-paren willen bepalen
-            # Nu is het alleen steeds [ouder1 + ouder2, ouder2 + ouder3...]
-            # parent1, parent2 = tournaments.choose_pairs(parents, i)
+            # Choose parents based on their fitness
             parent1, parent2 = tournaments.choose_sorted_pairs(parents, parents_f, i, N)
             i = i + 2
 
@@ -123,11 +97,6 @@ def evolution_process(NUM_GENERATIONS, beginpop, beginpop_f):
             new_pop.append(parent2)
             new_pop.append(child1)
             new_pop.append(child2)
-
-        #TODO: dit weghalen?
-        # Take half of population
-#        cut = int(0.5 * len(new_pop))
-#        new_pop = new_pop[:cut]
 
         # Mutate children and calculate new fitness
         pop, pop_f = non_uni_mutation(new_pop, env, BOUND_MIN, BOUND_MAX)
@@ -142,12 +111,31 @@ def evolution_process(NUM_GENERATIONS, beginpop, beginpop_f):
         f_max.append(max(pop_f))
         f_mean.append(np.mean(pop_f))
 
-        env.save_state()
+
+    print("Max: ", f_max, ", Mean: ", f_mean)
 
     # plot figure with max and mean fitness over generations
-    plot(NUM_GENERATIONS, f_max, f_mean)
+    # plot(NUM_GENERATIONS, f_max, f_mean)
 
-    # exit()
+    # Sort population to get individual with highest fitness
+    pop_sorted, pop_f_sorted = sort_population(pop, pop_f)
 
-# tournaments.choose_survivors(beginpop, beginpop_f)
-evolution_process(NUM_GENERATIONS, beginpop, beginpop_f)
+    # saves results for begin population
+    file_aux  = open(experiment_name + "/results.txt", "a")
+    file_aux.write(str(pop_sorted[-1]) + str(pop_f_sorted[-1]) + "\n")
+    file_aux.close()
+
+    # Save array of max values
+    file_aux  = open("maxvalues.txt", "a")
+    file_aux.write(time.strftime("%d-%m %H:%M ", time.localtime()) + "Max: " + str(f_max) + " Mean: " + str(f_mean) + "\n")
+    file_aux.close()
+
+
+if __name__ == "__main__":
+
+    # Start with random population
+    beginpop = np.random.uniform(BOUND_MIN, BOUND_MAX, (N, N_VARS))
+    beginpop_f = run_simulation(env, beginpop)[0]
+
+    # tournaments.choose_survivors(beginpop, beginpop_f)
+    evolution_process(NUM_GENERATIONS, beginpop, beginpop_f)
