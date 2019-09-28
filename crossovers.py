@@ -5,7 +5,7 @@ Returns two children (child1 and child2).
 import random
 import numpy as np
 
-def crossover(parent1, parent2):
+def crossover(parent1, parent2, cross_min, cross_max):
     """
     Standard crossover in which you choose a position and divide the parents
     at that position and combine them in that point
