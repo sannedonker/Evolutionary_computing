@@ -15,10 +15,10 @@ MUTATION_METHOD = 1
 
 if __name__ == "__main__":
 
-    # parent_select_type = input("Parent selection (kway/rank): ")
     parent_select_types = ["kway", "rank"]
     parent_select_type = "kway"
     mutation_types = ["uni", "scramble"]
+
     # for parent_select_type in parent_select_types:
     for mutation_type in mutation_types:
         f_max, f_mean = evolution_process(N, K, NUM_GENERATIONS,
@@ -27,6 +27,7 @@ if __name__ == "__main__":
                          MUTATION_METHOD, parent_select_type, mutation_type)
         plt.plot(list(range(0, NUM_GENERATIONS + 1)), f_max, label = 'best ' + mutation_type)
         plt.plot(list(range(0, NUM_GENERATIONS + 1)), f_mean, label = 'mean ' + mutation_type)
+        
     # plt.title('K-way VS Rank selection')
     plt.title('Uni VS Scramble mutation')
     plt.xlabel(xlabel = 'Generation number')

@@ -62,25 +62,39 @@ def scramble_mutation(pop, env):
     """
     Mutate parents by scrambling up genes in a specific fragment of the chromosome.
     """
+
     mutation_p = 1 / len(pop)
     num_of_genes = 4
     length = len(pop[0])
+
+    # repeat for each individual
     for parent in pop:
+
+        # mutation probability
         chance = np.random.uniform(0, 1)
         if chance <= mutation_p:
+
+            # switch specified amount of genes
             for i in range(num_of_genes):
                 r1 = int(np.random.uniform(0, length))
                 r2 = int(np.random.uniform(0, length))
+
                 while (r1 >= r2):
                     r1 = int(np.random.uniform(0, length))
                     r2 = int(np.random.uniform(0, length))
-                for i in range(num_of_genes*2):
+
+                for i in range(num_of_genes * 2):
                     i1 = int(np.random.uniform(r1, r2 + 1))
                     i2 = int(np.random.uniform(r1, r2 + 1))
+
+                    # switch
                     a = parent[i1]
                     parent[i1] = parent[i2]
                     parent[i2] = a
+
+    # re-evaluate population
     pop_f = evaluate(env, pop)[0]
+
     return pop, pop_f
 
 

@@ -35,7 +35,6 @@ N_HIDDEN = 10
 N_VARS = (env.get_num_sensors()+1)*N_HIDDEN + (N_HIDDEN+1)*5 # multilayer with 10 hidden neurons
 
 
-
 def run_simulation(env, pop):
     pop_f = []
     pop_pl = []
