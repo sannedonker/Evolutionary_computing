@@ -18,6 +18,7 @@ from tournaments import sort_population
 BOUND_MAX = 1
 BOUND_MIN = -1
 ENEMY_NR = [3]
+counter = 0
 #nr_generations = 2
 
 experiment_name = "EA2_results"
@@ -27,7 +28,7 @@ if not os.path.exists(experiment_name):
 env = Environment(experiment_name = experiment_name,
                   enemies = ENEMY_NR,
                   player_controller = player_controller(),
-                  # speed = "fastest",
+                  speed = "fastest",
                   savelogs="no")
 
 N_HIDDEN = 10
@@ -109,7 +110,19 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, method, selecti
 
 
         # Choose the survivors, bring pop length back from 20 to 10
-        pop, pop_f = tournaments.choose_survivors(pop, pop_f)
+        pop_temp, pop_f_temp = tournaments.choose_survivors(pop_temp, pop_f_temp)
+
+        # Only use new population if it has improved
+        if max(pop_f_temp) > max(pop_f):
+            pop, pop_f = pop_temp, pop_f_temp
+            counter = 0
+        else:
+            counter += 1
+
+        print("COUNTER = ", counter)
+
+        if counter > 5:
+            break
 
         solutions = [pop, pop_f]
         env.update_solutions(solutions)
@@ -117,7 +130,6 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, method, selecti
         # keep track of max and mean fitness for plot
         f_max.append(max(pop_f))
         f_mean.append(np.mean(pop_f))
-
 
         print("Max: ", f_max, ", Mean: ", f_mean)
 

@@ -16,8 +16,6 @@ def sort_population(pop, pop_f):
     sorted_f = np.asarray(pop_f)[sorting]
     sorted_pop = np.ndarray.tolist(sorted_pop)
     sorted_f = np.ndarray.tolist(sorted_f)
-
-    print(sorted_pop, sorted_f, "SORTED!!!!!!!")
     return sorted_pop, sorted_f
 
 
