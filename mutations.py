@@ -58,30 +58,31 @@ def uni_mutation(pop, env, bound_min, bound_max):
     return pop, pop_f
 
 
-def scramble_mutation(pop):
+def scramble_mutation(pop, env):
     """
     Mutate parents by scrambling up genes in a specific fragment of the chromosome.
     """
-    
+
     # TODO: slechts deel van gen muteren: (optional) minimal and maximal mutation point kiezen
-    print(pop)
     num_of_genes = 4
     length = len(pop[0])
     for parent in pop:
         for i in range(num_of_genes):
-            r1 = int(random.uniform(0, length))
-            r2 = int(random.uniform(0, length))
+            r1 = int(np.random.uniform(0, length))
+            r2 = int(np.random.uniform(0, length))
             while (r1 >= r2):
-                r1 = int(random.uniform(0, length))
-                r2 = int(random.uniform(0, length))
+                r1 = int(np.random.uniform(0, length))
+                r2 = int(np.random.uniform(0, length))
             for i in range(num_of_genes*2):
-                i1 = int(random.uniform(r1, r2 + 1))
-                i2 = int(random.uniform(r1, r2 + 1))
+                i1 = int(np.random.uniform(r1, r2 + 1))
+                i2 = int(np.random.uniform(r1, r2 + 1))
                 a = parent[i1]
                 parent[i1] = parent[i2]
                 parent[i2] = a
 
-    return pop
+    pop_f = evaluate(env, pop)[0]
+
+    return pop, pop_f
 
 
 def evaluate(env, pop):
