@@ -3,8 +3,9 @@ sys.path.insert(0, "evoman")
 
 from demo_controller import player_controller
 from environment import Environment
-from mutations import non_uni_mutation, uni_mutation
+from mutations import non_uni_mutation, uni_mutation, scramble_mutation
 from analyse import plot
+from rank_selection import rank_selection
 
 import crossovers
 import tournaments
@@ -50,7 +51,7 @@ def run_simulation(env, pop):
 
 
 # evolution process
-def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, method):
+def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, method, selection, mutation_type):
     """
     EVOLUTION PROCESS:
     Fitness calculation > mating pool > parents selection,
@@ -73,8 +74,12 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, method):
 
             f_max.append(max(pop_f))
             f_mean.append(np.mean(pop_f))
-
-        parents, parents_f = tournaments.choose_parents_kway(pop, pop_f, N, K)
+            parents, parents_f = pop, pop_f
+        else:
+            if selection == "kway":
+                parents, parents_f = tournaments.choose_parents_kway(pop, pop_f, N, K)
+            else:
+                parents, parents_f = rank_selection(pop, pop_f, N)
 
         new_pop = []
 
@@ -97,7 +102,11 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, method):
             new_pop.append(child2)
 
         # Mutate children and calculate new fitness
-        pop, pop_f = non_uni_mutation(new_pop, env, BOUND_MIN, BOUND_MAX, sigma, chance)
+        if mutation_type == "uni":
+            pop, pop_f = non_uni_mutation(new_pop, env, BOUND_MIN, BOUND_MAX, sigma, chance)
+        else:
+            pop, pop_f = scramble_mutation(new_pop, env)
+
 
         # Choose the survivors, bring pop length back from 20 to 10
         pop, pop_f = tournaments.choose_survivors(pop, pop_f)
@@ -113,7 +122,7 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, method):
         print("Max: ", f_max, ", Mean: ", f_mean)
 
     # plot figure with max and mean fitness over generations
-    # plot(NUM_GENERATIONS, f_max, f_mean)
+    # plot(num_gens, f_max, f_mean)
 
     # Sort population to get individual with highest fitness
     pop_sorted, pop_f_sorted = sort_population(pop, pop_f)
@@ -126,4 +135,5 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, method):
     # Save array of max values
     file_aux  = open(experiment_name + "/maxvalues.txt", "a")
     file_aux.write(time.strftime("%d-%m %H:%M ", time.localtime()) + "Max: " + str(f_max) + " Mean: " + str(f_mean) + "\n")
-    file_aux.close()
+    # file_aux.close()
+    return f_max, f_mean
