@@ -20,14 +20,15 @@ BOUND_MIN = -1
 ENEMY_NR = [3]
 #nr_generations = 2
 
-experiment_name = "EA2_results"
+experiment_name = "EA1_results"
 if not os.path.exists(experiment_name):
     os.makedirs(experiment_name)
 
 env = Environment(experiment_name = experiment_name,
                   enemies = ENEMY_NR,
                   player_controller = player_controller(),
-                  speed = "fastest",
+                  level = 2,
+                  contacthurt = "player",
                   savelogs="no")
 
 N_HIDDEN = 10
@@ -113,10 +114,11 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
 
         # Only use new population if it has improved
         if max(pop_f_temp) > max(pop_f):
-            pop, pop_f = pop_temp, pop_f_temp
+            # pop, pop_f = pop_temp, pop_f_temp
             counter = 0
         else:
             counter += 1
+        pop, pop_f = pop_temp, pop_f_temp
 
         print("COUNTER = ", counter)
 
