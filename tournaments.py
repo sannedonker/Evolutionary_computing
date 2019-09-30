@@ -3,18 +3,19 @@ import random
 
 CONVERGENCE = 3
 KEEP_PERCENTAGE = 10
+KILL_PART = 4
 
 def sort_population(pop, pop_f):
     """
     Sort population from worst to best based on fitness
     """
     # evt TODO: nu mega omslachtig maar alles lukte even neit en dat was kut
+
     sorting = np.asarray(pop_f).argsort()
     sorted_pop = np.asarray(pop)[sorting]
     sorted_f = np.asarray(pop_f)[sorting]
     sorted_pop = np.ndarray.tolist(sorted_pop)
     sorted_f = np.ndarray.tolist(sorted_f)
-
     return sorted_pop, sorted_f
 
 
@@ -43,10 +44,13 @@ def choose_parents_kway(pop, pop_f, n, k):
                 contestent = random.randint(0, n - 1)
             contestents.append(contestent)
 
-        for j in contestents:
-            tournament.append(pop[j])
-            tournament_f.append(pop_f[j])
-            tournament_c.append(j)
+        # contestents is an array of random numbers between 0 and n-1
+        for m in contestents:
+            tournament.append(pop[m])
+            tournament_f.append(pop_f[m])
+
+            # TODO: Sannie deze regel kan toch ook weg?
+            tournament_c.append(m)
 
         # choose winner, add winner to the parents
         winner = tournament_f.index(max(tournament_f))
@@ -80,8 +84,8 @@ def choose_survivors(pop, pop_f):
     must_survive_f = sorted_f[(len(pop) - top):]
     # print(must_survive_f)
 
-    # kill worst quarter
-    quarter = int(len(pop) / 4)
+    # kill worst part
+    quarter = int(len(pop) / KILL_PART)
     survivors = sorted_pop[quarter:]
     survivor_fitness = sorted_f[quarter:]
 
@@ -128,12 +132,9 @@ def choose_pairs(parents, i):
     """
     Choose 2 parents from the whole generation of parents.
     This pair is then used in crossover(parent1, parent2)
-    TODO: REBECCA AFMAKEN
     """
 
     parent1 = parents[i]
-    # if i == offspring_size - 1:
-    #     i = 0
     parent2 = parents[i + 1]
 
     return parent1, parent2
