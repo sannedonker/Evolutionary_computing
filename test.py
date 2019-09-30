@@ -13,12 +13,12 @@ import numpy as np
 from random import randint
 
 # parameters
-K = 3
-N = 10
+K = 10
+N = 100
 BOUND_MAX = 1
 BOUND_MIN = -1
 ENEMY_NR = [2]
-NUM_GENERATIONS = 3
+NUM_GENERATIONS = 10
 OFSPRING_SIZE = 10
 #nr_generations = 2
 
