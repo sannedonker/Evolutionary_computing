@@ -1,6 +1,7 @@
-# Gebaseerd op boek p. 82 
+# Gebaseerd op boek p. 82
+import numpy as np
 
-def rank_selection(pop, pop_f):
+def rank_selection(pop, pop_f, N):
     """
     Rank individuals in population according to their fitness values.
     Returns
@@ -14,36 +15,29 @@ def rank_selection(pop, pop_f):
     sorting = np.asarray(pop_f).argsort()
     sorted_pop = np.asarray(pop)[sorting]
     sorted_f = np.asarray(pop_f)[sorting]
+    sorted_pop = np.ndarray.tolist(sorted_pop)
+    sorted_f = np.ndarray.tolist(sorted_f)
 
     # calculate selection probability for an individual of rank i (see book p. 82)
     mu = len(pop)
     s_value = 2
     ranked_prob = []
 
-    # LINEAR RANKING - WORKS
+    # LINEAR RANKING: determine fitness score based on rank
     for i in range(mu):
         prob = (2 - s_value) / mu + (2 * i * (s_value - 1)) / (mu * (mu - 1))
         ranked_prob.append(prob)
 
-    # EXPONENTIAL RANKING - DOES NOT WORK: what is c?
-    # for i in range(mu):
-    #     prob = (1 - math.exp(-i)) / mu
-    #     ranked_prob.append(prob)
+    # make wheel according to fitness scores
+    top = ranked_prob[len(ranked_prob) - 1]
+    wheel = [0]*len(ranked_prob)
 
-
-    print("ranked_prob")
-
-    print(ranked_prob)
+    for i in range(1, len(ranked_prob), 1):
+        wheel[i] = float(ranked_prob[i])/top
 
     # return roulette_wheel(sorted_pop, ranked_prob)
-    return stoch_uni_sampling(sorted_pop, ranked_prob)
-
-    # NOG VERDER MEE WERKEN
-    # total_fit = float(sum(fitness))
-    # relative_fitness = [f/total_fit for f in fitness]
-    # probabilities = [sum(relative_fitness[:i+1])
-    #                  for i in range(len(relative_fitness))]
-    # return probabilities
+    mating_pool, mating_pool_f = stoch_uni_sampling(sorted_pop, sorted_f, N, wheel)
+    return mating_pool, mating_pool_f
 
 def roulette_wheel(pop, ranked_prob):
     """
@@ -51,17 +45,6 @@ def roulette_wheel(pop, ranked_prob):
     """
     amount = 10
     current_member = 0
-
-    # ZIE BOEK
-    # while (current_member < amount):
-    #     r = np.random.uniform(0, 1) # random getal tussen 0 en sum(ranked_prob) (=>1)
-    #     i = 0
-    #     while (ranked_prob[i] < r):
-    #         i += 1
-    #     mating_pool[current_member] = pop[i]
-    #     current_member += 1
-    # print(mating_pool)
-
 
     # WERKT MAAR OUTPUT ZELFDE OUDERS + NIET ALTIJD OUTPUT
     mating_pool = []
@@ -74,43 +57,26 @@ def roulette_wheel(pop, ranked_prob):
 
     return mating_pool
 
-def stoch_uni_sampling(pop, ranked_prob):
+def stoch_uni_sampling(pop, pop_f, N, wheel):
     """
     Selects lambda members of the mating pool, given the cumulative probability distribution a.
     """
-    amount = 1
-    current_member = i = 1
 
+    amount = N
+    current_member = 0
+    i = 1
     mating_pool = [0] * amount
-    r = np.random.uniform(0, 1 / amount)
-    print(r)
+    mating_pool_f = [0] * amount
+    r = np.random.uniform(0, 1)
+
+    # repeat until requested amount of individuals are chosen
     while (current_member < amount):
-        while (r <= ranked_prob[i]):
+        if(r <= wheel[i]):
             mating_pool[current_member] = pop[i]
-            r += 1 / amount
+            mating_pool_f[current_member] = pop_f[i]
             current_member += 1
+            r = (r + 1 / amount) % 1
         i += 1
+        i = i % len(pop)
 
-
-    # # WERKT (niet meer) MAAR OUTPUT ZELFDE OUDERS
-    # mating_pool = []
-    # for n in range(amount):
-    #     r = np.random.uniform(0, 1/amount)
-    #     print(r)
-    #     # r= random.random()
-    #     for (i, individual) in enumerate(pop):
-    #         if r <= ranked_prob[i]:
-    #             print("yee")
-    #             mating_pool.append(individual)
-    #             break
-    #
-    return mating_pool
-
-# TESTEN
-pop = [8,7,6,5,4,3,2]
-pop_f = [1,2,5,9,30,60,70]
-
-chosen = rank_selection(pop,pop_f)
-print("chosen")
-print(chosen)
-exit(1)
+    return mating_pool, mating_pool_f
