@@ -18,7 +18,6 @@ from tournaments import sort_population
 BOUND_MAX = 1
 BOUND_MIN = -1
 ENEMY_NR = [3]
-counter = 0
 #nr_generations = 2
 
 experiment_name = "EA2_results"
@@ -51,7 +50,7 @@ def run_simulation(env, pop):
 
 
 # evolution process
-def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, method, selection, mutation_type):
+def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, mutation_type):
     """
     EVOLUTION PROCESS:
     Fitness calculation > mating pool > parents selection,
@@ -65,6 +64,7 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, method, selecti
     # Keep track of max and mean fitness over generations
     f_max = []
     f_mean = []
+    counter = 0
 
     for i in range(num_gens):
 
@@ -75,6 +75,7 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, method, selecti
             f_max.append(max(pop_f))
             f_mean.append(np.mean(pop_f))
             parents, parents_f = pop, pop_f
+
         else:
             if selection == "kway":
                 parents, parents_f = tournaments.choose_parents_kway(pop, pop_f, N, K)
@@ -103,10 +104,9 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, method, selecti
 
         # Mutate children and calculate new fitness
         if mutation_type == "uni":
-            pop, pop_f = non_uni_mutation(new_pop, env, BOUND_MIN, BOUND_MAX, sigma, chance)
+            pop_temp, pop_f_temp = non_uni_mutation(new_pop, env, BOUND_MIN, BOUND_MAX, sigma, chance)
         else:
-            pop, pop_f = scramble_mutation(new_pop, env)
-
+            pop_temp, pop_f_temp = scramble_mutation(new_pop, env)
 
         # Choose the survivors, bring pop length back from 20 to 10
         pop_temp, pop_f_temp = tournaments.choose_survivors(pop_temp, pop_f_temp)
@@ -123,8 +123,8 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, method, selecti
         if counter > 5:
             break
 
-        solutions = [pop, pop_f]
-        env.update_solutions(solutions)
+        # solutions = [pop, pop_f]
+        # env.update_solutions(solutions)
 
         # keep track of max and mean fitness for plot
         f_max.append(max(pop_f))

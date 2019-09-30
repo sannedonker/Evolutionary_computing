@@ -11,8 +11,6 @@ def crossover(parent1, parent2, cross_min, cross_max):
     at that position and combine them in that point
     """
     # TODO: magic numbers weg --> deze nummers onderbouwen
-    print("Parent1:", parent1)
-    print("Parent2:", parent2)
 
     probality = random.uniform(0.5, 0.9)
     cut = probality * len(parent1)
