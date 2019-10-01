@@ -45,8 +45,6 @@ def uni_mutation(pop, env, bound_min, bound_max):
                 mutation_value = np.random.uniform(bound_min, bound_max)
                 pop[i][j] = mutation_value
 
-    print(pop[0])
-
     pop_f = evaluate(env, pop)[0]
 
     return pop, pop_f

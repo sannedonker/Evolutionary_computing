@@ -21,7 +21,7 @@ BOUND_MAX = 1
 BOUND_MIN = -1
 ENEMY_NR = [4]
 
-experiment_name = "EA1_results"
+experiment_name = "EA2_results_EN4"
 if not os.path.exists(experiment_name):
     os.makedirs(experiment_name)
 
@@ -105,16 +105,20 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
 
         # Mutate children and calculate new fitness
         if mutation_type == "uni":
-            new_pop_children, new_pop_children_f = uni_mutation(new_pop_children, env, BOUND_MIN, BOUND_MAX, sigma, chance)
+            new_pop_children, new_pop_children_f = uni_mutation(new_pop_children, env, BOUND_MIN, BOUND_MAX)
         else:
             new_pop_children, new_pop_children_f = scramble_mutation(new_pop_children, env)
 
         # add children to population
         new_pop = np.ndarray.tolist(new_pop) + new_pop_children
         new_pop_f = new_pop_f + new_pop_children_f
+        
+#        print("NOW POP LENGTH", len(new_pop))
 
         # Choose the survivors, bring pop length to N / 2
         new_pop, new_pop_f = tournaments.choose_survivors(new_pop, new_pop_f)
+        
+#        print("NOW POP LENGTH", len(new_pop))
 
         # Only use new population if it has improved
         if max(new_pop_f) > max(pop_f):
@@ -126,6 +130,8 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
         print("COUNTER = ", counter)
 
         if counter > 5:
+            f_max.append(max(pop_f))
+            f_mean.append(np.mean(pop_f))
             break
 
         # solutions = [pop, pop_f]
@@ -134,8 +140,6 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
         # keep track of max and mean fitness for plot
         f_max.append(max(pop_f))
         f_mean.append(np.mean(pop_f))
-
-        print("Max: ", f_max, ", Mean: ", f_mean)
 
     # plot figure with max and mean fitness over generations
     # plot(num_gens, f_max, f_mean)

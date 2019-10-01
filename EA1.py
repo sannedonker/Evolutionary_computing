@@ -7,16 +7,16 @@ import numpy as np
 import time
 
 # parameters
-N = 10 # MUST BE AN EVEN NUMBER
-K = [3]
-NUM_GENERATIONS = 10
+N = 100 # MUST BE AN EVEN NUMBER
+K = [5]
+NUM_GENERATIONS = 15
 CROSSOVER_MIN = 0.5
 CROSSOVER_MAX = 0.9
 MUTATION_SIGMA = 0.5
 MUTATION_CHANCE = 0.15
-RUNS = 1
+RUNS = 10
 
-experiment_name = "EA1_KWAY_"
+experiment_name = "EA1_ENEMY2_"
 
 
 if __name__ == "__main__":
@@ -24,7 +24,7 @@ if __name__ == "__main__":
     # DETERMINE K
     for i in range(RUNS):
         parent_select_type = "kway"
-        mutation_type = "scramble"
+        mutation_type = "uni"
 
         # for parent_select_type in parent_select_types:
         for j in K:
@@ -47,8 +47,10 @@ if __name__ == "__main__":
             # Save array of max values
             # length of mean and max is number of generations (incl gen 0)
             file_aux  = open(experiment_name + str(j) + "/maxvalues.txt", "a")
+            
             file_aux.write(time.strftime("%d-%m %H:%M ", time.localtime()) + "Max: " + str(f_max) + " Mean: " + str(f_mean) + "\n")
-            # file_aux.close()
+            
+            file_aux.close()
 
 
 
