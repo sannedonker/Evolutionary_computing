@@ -1,11 +1,5 @@
 import numpy as np
 
-# TODO: varying mutation step size?
-MUTATION_SIG = 0.5
-
-# TODO: Mutation hier ook tussen 1 / pop_size & 1 / chromosome_length?
-MUTATION_P = 0.15
-
 
 def non_uni_mutation(pop, env, bound_min, bound_max, sigma, chance):
 
