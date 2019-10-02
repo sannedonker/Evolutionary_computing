@@ -25,6 +25,7 @@ def choose_parents_kway(pop, pop_f, n, k):
     Input: population, number of contestents: K
     Output: list of parents
     """
+    
     parents = []
     parents_f = []
     index_list_MAGWEGOOIT = []
