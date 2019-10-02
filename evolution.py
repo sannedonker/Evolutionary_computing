@@ -3,11 +3,13 @@ sys.path.insert(0, "evoman")
 
 from demo_controller import player_controller
 from environment import Environment
-from mutations import non_uni_mutation, uni_mutation, scramble_mutation
+# from mutations import non_uni_mutation, uni_mutation, scramble_mutation
+from mutations import *
 from analyse import plot
 from rank_selection import rank_selection
 
 import crossovers
+import mutations
 import tournaments
 import time
 
@@ -17,10 +19,9 @@ from tournaments import sort_population
 
 BOUND_MAX = 1
 BOUND_MIN = -1
-ENEMY_NR = [3]
-#nr_generations = 2
+ENEMY_NR = [4]
 
-experiment_name = "EA1_results"
+experiment_name = "EA2_results_EN4"
 if not os.path.exists(experiment_name):
     os.makedirs(experiment_name)
 
@@ -59,31 +60,32 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
     """
 
     # Start with random population
-    beginpop = np.random.uniform(BOUND_MIN, BOUND_MAX, (N, N_VARS))
-    beginpop_f = run_simulation(env, beginpop)[0]
+    pop = np.random.uniform(BOUND_MIN, BOUND_MAX, (N, N_VARS))
+    pop_f = run_simulation(env, pop)[0]
 
     # Keep track of max and mean fitness over generations
     f_max = []
     f_mean = []
     counter = 0
 
-    for i in range(num_gens):
+    for generation in range(num_gens):
+
+        # +1 since begin population is generation 0
+        print("GENERATION: " + str(generation + 1))
 
         # Start with random begin population
-        if i == 0:
-            pop, pop_f = beginpop, beginpop_f
-
+        if generation == 0:
             f_max.append(max(pop_f))
             f_mean.append(np.mean(pop_f))
-            parents, parents_f = pop, pop_f
 
+        if selection == "kway":
+            parents, parents_f = tournaments.choose_parents_kway(pop, pop_f, N, K)
         else:
-            if selection == "kway":
-                parents, parents_f = tournaments.choose_parents_kway(pop, pop_f, N, K)
-            else:
-                parents, parents_f = rank_selection(pop, pop_f, N)
+            parents, parents_f = rank_selection(pop, pop_f, N)
 
-        new_pop = []
+        new_pop = pop
+        new_pop_f = pop_f
+        new_pop_children = []
 
         # TODO: dit gaat nu best omslachtig, misschien meer in de choose pairs
         # functies zetten???
@@ -98,31 +100,38 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
             child1, child2 = crossovers.crossover(parent1, parent2, cmin, cmax)
 
             # Add children and parents to new population
-            new_pop.append(parent1)
-            new_pop.append(parent2)
-            new_pop.append(child1)
-            new_pop.append(child2)
+            new_pop_children.append(child1)
+            new_pop_children.append(child2)
 
         # Mutate children and calculate new fitness
         if mutation_type == "uni":
-            pop_temp, pop_f_temp = non_uni_mutation(new_pop, env, BOUND_MIN, BOUND_MAX, sigma, chance)
+            new_pop_children, new_pop_children_f = uni_mutation(new_pop_children, env, BOUND_MIN, BOUND_MAX)
         else:
-            pop_temp, pop_f_temp = scramble_mutation(new_pop, env)
+            new_pop_children, new_pop_children_f = scramble_mutation(new_pop_children, env)
 
-        # Choose the survivors, bring pop length back from 20 to 10
-        pop_temp, pop_f_temp = tournaments.choose_survivors(pop_temp, pop_f_temp)
+        # add children to population
+        new_pop = np.ndarray.tolist(new_pop) + new_pop_children
+        new_pop_f = new_pop_f + new_pop_children_f
+        
+#        print("NOW POP LENGTH", len(new_pop))
+
+        # Choose the survivors, bring pop length to N / 2
+        new_pop, new_pop_f = tournaments.choose_survivors(new_pop, new_pop_f)
+        
+#        print("NOW POP LENGTH", len(new_pop))
 
         # Only use new population if it has improved
-        if max(pop_f_temp) > max(pop_f):
-            # pop, pop_f = pop_temp, pop_f_temp
+        if max(new_pop_f) > max(pop_f):
             counter = 0
         else:
             counter += 1
-        pop, pop_f = pop_temp, pop_f_temp
+        pop, pop_f = new_pop, new_pop_f
 
         print("COUNTER = ", counter)
 
         if counter > 5:
+            f_max.append(max(pop_f))
+            f_mean.append(np.mean(pop_f))
             break
 
         # solutions = [pop, pop_f]
@@ -132,15 +141,15 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
         f_max.append(max(pop_f))
         f_mean.append(np.mean(pop_f))
 
-        print("Max: ", f_max, ", Mean: ", f_mean)
-
     # plot figure with max and mean fitness over generations
     # plot(num_gens, f_max, f_mean)
 
     # Sort population to get individual with highest fitness
     pop_sorted, pop_f_sorted = sort_population(pop, pop_f)
 
-    # saves results for begin population
+    best_pop_info = evaluate_best(env, pop_sorted[-1])
+
+    # saves results for best population
     file_aux  = open(experiment_name + "/results.txt", "a")
     file_aux.write(str(pop_sorted[-1]) + str(pop_f_sorted[-1]) + "\n")
     file_aux.close()
@@ -149,4 +158,20 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
     file_aux  = open(experiment_name + "/maxvalues.txt", "a")
     file_aux.write(time.strftime("%d-%m %H:%M ", time.localtime()) + "Max: " + str(f_max) + " Mean: " + str(f_mean) + "\n")
     # file_aux.close()
-    return f_max, f_mean
+    return f_max, f_mean, pop_sorted[-1], best_pop_info
+
+
+def evaluate_best(env, best):
+    pop_f = []
+    pop_pl = []
+    pop_el = []
+    pop_t = []
+
+    best = np.asarray(best)
+    fitness, player_life, enemy_life, time = env.play(pcont = best)
+    pop_f.append(fitness)
+    pop_pl.append(player_life)
+    pop_el.append(enemy_life)
+    pop_t.append(time)
+
+    return pop_f, pop_pl, pop_el, pop_t
