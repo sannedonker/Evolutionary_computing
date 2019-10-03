@@ -14,9 +14,9 @@ CROSSOVER_MIN = 0.5
 CROSSOVER_MAX = 0.9
 MUTATION_SIGMA = 0.5
 MUTATION_CHANCE = 0.15
-RUNS = 10
+RUNS = 1
 
-experiment_name = "EA1_ENEMY2_"
+experiment_name = "EA1_ENEMY4_"
 
 
 if __name__ == "__main__":
