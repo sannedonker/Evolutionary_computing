@@ -1,14 +1,11 @@
-"""
-Run crossover with two parents (parent1 and parent2).
-Returns two children (child1 and child2).
-"""
 import random
 import numpy as np
 
 def crossover(parent1, parent2, cross_min, cross_max):
     """
     Standard crossover in which you choose a position and divide the parents
-    at that position and combine them in that point
+    at that position and combine them in that point. Run crossover with two parents
+    (parent1 and parent2). Returns two children (child1 and child2).
     """
 
     probality = random.uniform(cross_min, cross_max)
