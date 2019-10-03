@@ -19,9 +19,9 @@ from tournaments import sort_population
 
 BOUND_MAX = 1
 BOUND_MIN = -1
-ENEMY_NR = [4]
+ENEMY_NR = [2]
 
-experiment_name = "EA2_results_EN4"
+experiment_name = "EA2_ENEMY2_kway_scramble"
 if not os.path.exists(experiment_name):
     os.makedirs(experiment_name)
 
@@ -79,10 +79,13 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
             f_mean.append(np.mean(pop_f))
 
         if selection == "kway":
+            print("Ik kom hieeeer")
             parents, parents_f = tournaments.choose_parents_kway(pop, pop_f, N, K)
         else:
+            print("Ik kom hieeeer2")
             parents, parents_f = rank_selection(pop, pop_f, N)
 
+        print("RANK")
         new_pop = pop
         new_pop_f = pop_f
         new_pop_children = []
@@ -112,12 +115,12 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
         # add children to population
         new_pop = np.ndarray.tolist(new_pop) + new_pop_children
         new_pop_f = new_pop_f + new_pop_children_f
-        
+
 #        print("NOW POP LENGTH", len(new_pop))
 
         # Choose the survivors, bring pop length to N / 2
         new_pop, new_pop_f = tournaments.choose_survivors(new_pop, new_pop_f)
-        
+
 #        print("NOW POP LENGTH", len(new_pop))
 
         # Only use new population if it has improved

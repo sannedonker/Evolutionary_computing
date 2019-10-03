@@ -16,7 +16,7 @@ MUTATION_SIGMA = 0.5
 MUTATION_CHANCE = 0.15
 RUNS = 10
 
-experiment_name = "EA2_ENEMY4_"
+experiment_name = "EA2_ENEMY2_kway_scramble"
 
 
 if __name__ == "__main__":

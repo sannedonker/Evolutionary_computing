@@ -25,10 +25,9 @@ def choose_parents_kway(pop, pop_f, n, k):
     Input: population, number of contestents: K
     Output: list of parents
     """
-    
+
     parents = []
     parents_f = []
-    index_list_MAGWEGOOIT = []
     for i in range(n):
 
         # choose K individuals that will enter the tournament
@@ -38,6 +37,8 @@ def choose_parents_kway(pop, pop_f, n, k):
         tournament_c = []
 
         for j in range(k):
+
+            print("kway")
 
             # make sure every individual can only compete once per tournament
             contestent = random.randint(0, n - 1)
@@ -50,22 +51,10 @@ def choose_parents_kway(pop, pop_f, n, k):
             tournament.append(pop[m])
             tournament_f.append(pop_f[m])
 
-            # TODO: Sannie deze regel kan toch ook weg?
-            tournament_c.append(m)
-
         # choose winner, add winner to the parents
         winner = tournament_f.index(max(tournament_f))
-        # index_contest = tournament_c[winner]
         parents.append(tournament[winner])
         parents_f.append(tournament_f[winner])
-        # index_list_MAGWEGOOIT.append(index_contest)
-
-    # TODO: print dingen weghalen en contest ook, maar wel nu nog even houden
-    # om allemaal shit te chekcennefnenenr
-
-    # print("fitness of paretns")
-    # print(parents_f)
-    # print(index_list_MAGWEGOOIT)
 
     return parents, parents_f
 
