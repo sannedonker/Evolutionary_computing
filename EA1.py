@@ -34,28 +34,14 @@ if __name__ == "__main__":
                              MUTATION_SIGMA, MUTATION_CHANCE,
                              parent_select_type, mutation_type)
 
-<<<<<<< HEAD
-            # saves results for best population
-            # list with best individual and tuple with all it's information
-            file_aux = open(experiment_name + str(j) + "/results.txt", "a")
-=======
             # Saves results for best population
             # List with best individual and tuple with all it's information
-            file_aux  = open(experiment_name + str(j) + "/results.txt", "a")
->>>>>>> 18647f4865b8ae13aab32b81f1d5605280a9c7b1
+            file_aux = open(experiment_name + str(j) + "/results.txt", "a")
             file_aux.write(str(pop_sorted) + str(best_pop_info) + "\n")
             file_aux.close()
 
             # Save array of max values
-<<<<<<< HEAD
-            # length of mean and max is number of generations (incl gen 0)
-            file_aux = open(experiment_name + str(j) + "/maxvalues.txt", "a")
-
-            file_aux.write(time.strftime("%d-%m %H:%M ", time.localtime()) + "Max: " + str(f_max) + " Mean: " + str(f_mean) + "\n")
-
-=======
             # Length of mean and max is number of generations (including gen 0)
             file_aux  = open(experiment_name + str(j) + "/maxvalues.txt", "a")
             file_aux.write(time.strftime("%d-%m %H:%M ", time.localtime()) + "Max: " + str(f_max) + " Mean: " + str(f_mean) + "\n")
->>>>>>> 18647f4865b8ae13aab32b81f1d5605280a9c7b1
             file_aux.close()

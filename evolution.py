@@ -19,7 +19,7 @@ from tournaments import sort_population
 # Parameters
 BOUND_MAX = 1
 BOUND_MIN = -1
-ENEMY_NR = [7]
+ENEMY_NR = [4]
 
 # Experiment
 experiment_name = "EA2_results_EN4"
@@ -48,7 +48,7 @@ def run_simulation(env, pop):
     pop_t = []
 
     for individual in pop:
-        fitness, player_life, enemy_life, time = env.play(pcont = individual)
+        fitness, player_life, enemy_life, time = env.play(pcont=individual)
         pop_f.append(fitness)
         pop_pl.append(player_life)
         pop_el.append(enemy_life)
@@ -86,13 +86,10 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
 
         # Parent selection can be K-way or Rank selection
         if selection == "kway":
-            print("Ik kom hieeeer")
             parents, parents_f = tournaments.choose_parents_kway(pop, pop_f, N, K)
         else:
-            print("Ik kom hieeeer2")
             parents, parents_f = rank_selection(pop, pop_f, N)
 
-        print("RANK")
         new_pop = pop
         new_pop_f = pop_f
         new_pop_children = []
@@ -147,7 +144,7 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
     best_pop_info = evaluate_best(env, pop_sorted[-1])
 
     # saves results for best population
-    file_aux  = open(experiment_name + "/results.txt", "a")
+    file_aux = open(experiment_name + "/results.txt", "a")
     file_aux.write(str(pop_sorted[-1]) + str(pop_f_sorted[-1]) + "\n")
     file_aux.close()
 
@@ -162,16 +159,12 @@ def evaluate_best(env, best):
     """
     Evaluate best individual.
     """
-    pop_f = []
-    pop_pl = []
-    pop_el = []
-    pop_t = []
+    # pop_f = []
 
     best = np.asarray(best)
-    fitness, player_life, enemy_life, time = env.play(pcont = best)
-    pop_f.append(fitness)
-    pop_pl.append(player_life)
-    pop_el.append(enemy_life)
-    pop_t.append(time)
+    fitness = env.play(pcont = best)
+    # pop_pl.append(player_life)
+    # pop_el.append(enemy_life)
+    # pop_t.append(time)
 
-    return pop_f, pop_pl, pop_el, pop_t
+    return fitness

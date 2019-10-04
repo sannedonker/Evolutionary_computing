@@ -12,7 +12,7 @@ def non_uni_mutation(pop, env, bound_min, bound_max, sigma, chance):
         for j in range(0, len(pop[i]) - 1):
             chance = np.random.uniform(0, 1)
             if chance <= chance:
-                changed +=1
+                changed += 1
                 mutation_value = np.random.uniform(-sigma, sigma)
                 pop[i][j] = pop[i][j] + mutation_value
 
