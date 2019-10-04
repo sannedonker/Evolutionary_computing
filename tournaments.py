@@ -37,7 +37,7 @@ def choose_parents_kway(pop, pop_f, n, k):
         tournament_c = []
 
         for j in range(k):
-
+            # make sure every individual can only compete once per tournament
             contestent = random.randint(0, n - 1)
             while contestent in contestents:
                 contestent = random.randint(0, n - 1)

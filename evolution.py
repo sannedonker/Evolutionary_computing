@@ -21,8 +21,9 @@ BOUND_MAX = 1
 BOUND_MIN = -1
 ENEMY_NR = [4]
 
-# Experiment
-experiment_name = "EA2_results_EN4"
+
+experiment_name = "EA1_results_EN4_"
+
 if not os.path.exists(experiment_name):
     os.makedirs(experiment_name)
 
