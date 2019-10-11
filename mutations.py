@@ -21,7 +21,7 @@ def non_uni_mutation(pop, env, bound_min, bound_max, sigma, chance):
                 while pop[i][j] > bound_max:
                     pop[i][j] = pop[i][j] / 2
 
-    pop_f = evaluate(env, pop)[0]
+    pop_f, pop_pl, pop_el = evaluate(env, pop)
 
     return pop, pop_f
 
@@ -41,9 +41,9 @@ def uni_mutation(pop, env, bound_min, bound_max):
                 mutation_value = np.random.uniform(bound_min, bound_max)
                 pop[i][j] = mutation_value
 
-    pop_f = evaluate(env, pop)[0]
+    pop_f, pop_pl, pop_el = evaluate(env, pop)
 
-    return pop, pop_f
+    return pop, pop_f, pop_pl, pop_el
 
 
 def scramble_mutation(pop, env):
@@ -81,9 +81,9 @@ def scramble_mutation(pop, env):
                     parent[i2] = temp
 
     # Re-evaluate population
-    pop_f = evaluate(env, pop)[0]
+    pop_f, pop_pl, pop_el = evaluate(env, pop)
 
-    return pop, pop_f
+    return pop, pop_f, pop_pl, pop_el
 
 
 def evaluate(env, pop):
@@ -93,13 +93,11 @@ def evaluate(env, pop):
     pop_f = []
     pop_pl = []
     pop_el = []
-    pop_t = []
 
     for individual in pop:
-        fitness, player_life, enemy_life, time = env.play(pcont = individual)
+        fitness, player_life, enemy_life, time = env.play(pcont=individual)
         pop_f.append(fitness)
         pop_pl.append(player_life)
         pop_el.append(enemy_life)
-        pop_t.append(time)
 
-    return pop_f, pop_pl, pop_el, pop_t
+    return pop_f, pop_pl, pop_el

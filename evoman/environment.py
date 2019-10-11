@@ -16,8 +16,10 @@ import tmx
 from player import *
 from controller import Controller
 
-
+import os
+os.environ["SDL_VIDEODRIVER"] = "dummy"
 # main class
+
 class Environment(object):
 
 
@@ -497,7 +499,7 @@ class Environment(object):
             def return_run():
                 self.print_logs("RUN: run status: enemy: "+str(self.enemyn)+"; fitness: " + str(fitness) + "; player life: " + str(self.player.life)  + "; enemy life: " + str(self.enemy.life) + "; time: " + str(self.time))
 
-                return  fitness, self.player.life, self.enemy.life, self.time
+                return fitness, self.player.life, self.enemy.life, self.time
 
 
 
