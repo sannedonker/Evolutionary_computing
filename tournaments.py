@@ -25,9 +25,6 @@ def sort_population(pop, pop_f, pop_pl, pop_el):
     sorting = np.asarray(pop_f).argsort()
     sorted_pop = np.asarray(pop)[sorting]
     sorted_f = np.asarray(pop_f)[sorting]
-    print(bcolors.OKBLUE + str(sorted_f) + bcolors.ENDC)
-    print(len(pop), "populationlength")
-
     sorted_pop = np.ndarray.tolist(sorted_pop)
     sorted_f = np.ndarray.tolist(sorted_f)
 
@@ -96,6 +93,7 @@ def choose_survivors(pop, pop_f, pop_pl, pop_el):
     survivor_fitness = sorted_f[quarter:]
     survivor_pl = sorted_pl[quarter:]
     survivor_el = sorted_el[quarter:]
+
     # Kill a random quarter
     for i in range(quarter):
         kill = random.randint(0, len(survivors) - 1)
@@ -108,8 +106,8 @@ def choose_survivors(pop, pop_f, pop_pl, pop_el):
 
         survivors.remove(survivors[kill])
         survivor_fitness.remove(survivor_fitness[kill])
-        survivor_pl.remove(sorted_pl[kill])
-        survivor_el.remove(sorted_el[kill])
+        survivor_pl.remove(survivor_pl[kill])
+        survivor_el.remove(survivor_el[kill])
 
     # If less than half of the population is killed, kill more individuals
     while len(pop) / 2 != len(survivors):
