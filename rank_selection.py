@@ -10,6 +10,7 @@ def rank_selection(pop, pop_f, N):
     # make arrays of lists
     pop = np.asarray(pop)
     pop_f = np.asarray(pop_f)
+    pop_pl = np.asarray(pop_pl)
 
     # sort sample
     sorting = np.asarray(pop_f).argsort()
@@ -59,7 +60,7 @@ def roulette_wheel(pop, ranked_prob):
     return mating_pool
 
 
-def stoch_uni_sampling(pop, pop_f, N, wheel):
+def stoch_uni_sampling(pop, pop_f, pop_pl, N, wheel):
     """
     Selects members using stochastic universal sampling.
     """
@@ -69,6 +70,7 @@ def stoch_uni_sampling(pop, pop_f, N, wheel):
     i = 1
     mating_pool = [0] * amount
     mating_pool_f = [0] * amount
+    mating_pool_pl = [0] * amount
     r = np.random.uniform(0, 1)
 
     # Repeat until requested amount of individuals are chosen
@@ -76,9 +78,10 @@ def stoch_uni_sampling(pop, pop_f, N, wheel):
         if(r <= wheel[i]):
             mating_pool[current_member] = pop[i]
             mating_pool_f[current_member] = pop_f[i]
+            mating_pool_pl[current_member] = pop_pl[i]
             current_member += 1
             r = (r + 1 / amount) % 1
         i += 1
         i = i % len(pop)
 
-    return mating_pool, mating_pool_f
+    return mating_pool, mating_pool_f, mating_pool_pl
