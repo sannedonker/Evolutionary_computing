@@ -22,6 +22,11 @@ BOUND_MIN = -1
 # Multilayer with 10 hidden neurons
 N_HIDDEN = 10
 
+ENEMY_NR = [1, 2, 3, 4, 5, 6, 7, 8]
+
+experiment_name = "TESTEN"
+
+
 
 class bcolors:
     HEADER = '\033[95m'
@@ -185,9 +190,19 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
 
 def evaluate_best(env, best):
     """
-    Evaluate best individual.
+    Evaluate best individual
     """
 
     best = np.asarray(best)
-    fitness, pl, el, time = env.play(pcont=best)
-    return fitness, pl, el
+    fitness, player_life, enemy_life, time = env.play(pcont = best)
+
+    return fitness, player_life, enemy_life
+
+def fitness_and_gains(fitness, gains):
+    """
+    New fitness function that optimizes for 80% fitness and 20% gains
+    """
+
+    optimize = 0.8 * fitness + 0.2 * generations
+
+    return optimize

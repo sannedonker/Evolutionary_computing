@@ -14,6 +14,7 @@ MUTATION_SIGMA = 0.5
 MUTATION_CHANCE = 0.15
 RUNS = 1
 
+
 experiment_name = "ANN1_"
 
 

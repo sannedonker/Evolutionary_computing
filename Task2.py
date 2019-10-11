@@ -18,16 +18,16 @@ RUNS = 10
 ENEMIES = [[2, 4, 7], [7, 8], [1, 2, 3, 4, 5, 6, 7, 8]]
 
 # ______TESTING PARAMETERS_______
-# N = 4
-# K = 2
-# NUM_GENERATIONS = 2
-# CROSSOVER_MIN = 0.5
-# CROSSOVER_MAX = 0.9
-# MUTATION_SIGMA = 0.5
-# MUTATION_CHANCE = 0.15
-# parent_select_type = "kway"
-# mutation_type = "uni"
-# RUNS = 1
+N = 4
+K = 2
+NUM_GENERATIONS = 2
+CROSSOVER_MIN = 0.5
+CROSSOVER_MAX = 0.9
+MUTATION_SIGMA = 0.5
+MUTATION_CHANCE = 0.15
+parent_select_type = "kway"
+mutation_type = "uni"
+RUNS = 1
 
 
 experiment_name = "ANN1"

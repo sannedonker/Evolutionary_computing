@@ -16,8 +16,6 @@ import tmx
 from player import *
 from controller import Controller
 
-import os
-os.environ["SDL_VIDEODRIVER"] = "dummy"
 # main class
 
 class Environment(object):
