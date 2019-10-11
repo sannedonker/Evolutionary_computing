@@ -1,15 +1,16 @@
 # Gebaseerd op boek p. 82
 import numpy as np
 
+
 def rank_selection(pop, pop_f, N):
     """
     Rank individuals in population according to their fitness values.
-    Returns
     """
 
     # make arrays of lists
     pop = np.asarray(pop)
     pop_f = np.asarray(pop_f)
+    pop_pl = np.asarray(pop_pl)
 
     # sort sample
     sorting = np.asarray(pop_f).argsort()
@@ -39,14 +40,15 @@ def rank_selection(pop, pop_f, N):
     mating_pool, mating_pool_f = stoch_uni_sampling(sorted_pop, sorted_f, N, wheel)
     return mating_pool, mating_pool_f
 
+
 def roulette_wheel(pop, ranked_prob):
     """
-    Selects lambda members of the mating pool, given the cumulative probability distribution a.
+    Selects members of the mating pool, given the cumulative probability distribution a.
     """
+
     amount = 10
     current_member = 0
 
-    # WERKT MAAR OUTPUT ZELFDE OUDERS + NIET ALTIJD OUTPUT
     mating_pool = []
     for n in range(amount):
         r = np.random.uniform(0, 1)
@@ -57,9 +59,10 @@ def roulette_wheel(pop, ranked_prob):
 
     return mating_pool
 
-def stoch_uni_sampling(pop, pop_f, N, wheel):
+
+def stoch_uni_sampling(pop, pop_f, pop_pl, N, wheel):
     """
-    Selects lambda members of the mating pool, given the cumulative probability distribution a.
+    Selects members using stochastic universal sampling.
     """
 
     amount = N
@@ -67,16 +70,18 @@ def stoch_uni_sampling(pop, pop_f, N, wheel):
     i = 1
     mating_pool = [0] * amount
     mating_pool_f = [0] * amount
+    mating_pool_pl = [0] * amount
     r = np.random.uniform(0, 1)
 
-    # repeat until requested amount of individuals are chosen
+    # Repeat until requested amount of individuals are chosen
     while (current_member < amount):
         if(r <= wheel[i]):
             mating_pool[current_member] = pop[i]
             mating_pool_f[current_member] = pop_f[i]
+            mating_pool_pl[current_member] = pop_pl[i]
             current_member += 1
             r = (r + 1 / amount) % 1
         i += 1
         i = i % len(pop)
 
-    return mating_pool, mating_pool_f
+    return mating_pool, mating_pool_f, mating_pool_pl

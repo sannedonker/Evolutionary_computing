@@ -5,18 +5,40 @@ CONVERGENCE = 3
 KEEP_PERCENTAGE = 10
 KILL_PART = 4
 
-def sort_population(pop, pop_f):
+
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+
+def sort_population(pop, pop_f, pop_pl, pop_el):
     """
     Sort population from worst to best based on fitness
     """
-    # evt TODO: nu mega omslachtig maar alles lukte even neit en dat was kut
 
     sorting = np.asarray(pop_f).argsort()
     sorted_pop = np.asarray(pop)[sorting]
     sorted_f = np.asarray(pop_f)[sorting]
+    print(bcolors.OKBLUE + str(sorted_f) + bcolors.ENDC)
+    print(len(pop), "populationlength")
+
     sorted_pop = np.ndarray.tolist(sorted_pop)
     sorted_f = np.ndarray.tolist(sorted_f)
-    return sorted_pop, sorted_f
+
+    if pop_pl is not None:
+        sorted_pl = np.asarray(pop_pl)[sorting]
+        sorted_el = np.asarray(pop_el)[sorting]
+        sorted_pl = np.ndarray.tolist(sorted_pl)
+        sorted_el = np.ndarray.tolist(sorted_el)
+        return sorted_pop, sorted_f, sorted_pl, sorted_el
+    else:
+        return sorted_pop, sorted_f
 
 
 def choose_parents_kway(pop, pop_f, n, k):
@@ -25,75 +47,60 @@ def choose_parents_kway(pop, pop_f, n, k):
     Input: population, number of contestents: K
     Output: list of parents
     """
+
     parents = []
     parents_f = []
-    index_list_MAGWEGOOIT = []
     for i in range(n):
 
-        # choose K individuals that will enter the tournament
+        # Choose K individuals that will enter the tournament
         tournament = []
         tournament_f = []
         contestents = []
-        tournament_c = []
 
         for j in range(k):
-
             # make sure every individual can only compete once per tournament
             contestent = random.randint(0, n - 1)
             while contestent in contestents:
                 contestent = random.randint(0, n - 1)
             contestents.append(contestent)
 
-        # contestents is an array of random numbers between 0 and n-1
+        # Contestents is an array of random numbers between 0 and n-1
         for m in contestents:
             tournament.append(pop[m])
             tournament_f.append(pop_f[m])
 
-            # TODO: Sannie deze regel kan toch ook weg?
-            tournament_c.append(m)
-
-        # choose winner, add winner to the parents
         winner = tournament_f.index(max(tournament_f))
-        # index_contest = tournament_c[winner]
         parents.append(tournament[winner])
         parents_f.append(tournament_f[winner])
-        # index_list_MAGWEGOOIT.append(index_contest)
-
-    # TODO: print dingen weghalen en contest ook, maar wel nu nog even houden
-    # om allemaal shit te chekcennefnenenr
-
-    # print("fitness of paretns")
-    # print(parents_f)
-    # print(index_list_MAGWEGOOIT)
 
     return parents, parents_f
 
 
-def choose_survivors(pop, pop_f):
+def choose_survivors(pop, pop_f, pop_pl, pop_el):
     """"
     First kill the worst quarter of the generation.
     Then kill a random quarter of the generation.
     """
 
-    # sort pop_f and then sort pop similarly
-    sorted_pop, sorted_f = sort_population(pop, pop_f)
+    # Sort pop_f and then sort pop similarly
+    sorted_pop, sorted_f, sorted_pl, sorted_el = sort_population(pop, pop_f, pop_pl, pop_el)
 
-    # always keep best KEEP_PERCENTAGE percent of population
+    # Always keep best KEEP_PERCENTAGE percent of population
     top = int(len(pop) / KEEP_PERCENTAGE)
     must_survive = sorted_pop[(len(pop) - top):]
-    must_survive_f = sorted_f[(len(pop) - top):]
-    # print(must_survive_f)
+    # must_survive_f = sorted_f[(len(pop) - top):]
 
-    # kill worst part
+    # Kill worst part
     quarter = int(len(pop) / KILL_PART)
     survivors = sorted_pop[quarter:]
     survivor_fitness = sorted_f[quarter:]
-
-    # kill a random quarter
+    survivor_pl = sorted_pl[quarter:]
+    survivor_el = sorted_el[quarter:]
+    # Kill a random quarter
     for i in range(quarter):
         kill = random.randint(0, len(survivors) - 1)
 
-        # make sure the best individuals survive, when population converges kill anyway
+        # Make sure the best individuals survive, when population converges kill anyway
         i = 0
         while survivors[kill] in must_survive and i < CONVERGENCE:
             kill = random.randint(0, len(survivors) - 1)
@@ -101,16 +108,20 @@ def choose_survivors(pop, pop_f):
 
         survivors.remove(survivors[kill])
         survivor_fitness.remove(survivor_fitness[kill])
+        survivor_pl.remove(survivor_pl[kill])
+        survivor_el.remove(survivor_el[kill])
 
-    # if less than half of the population is killed, kill more individuals
+    # If less than half of the population is killed, kill more individuals
     while len(pop) / 2 != len(survivors):
         kill = random.randint(0, len(survivors) - 1)
         survivors.remove(survivors[kill])
         survivor_fitness.remove(survivor_fitness[kill])
+        survivor_pl.remove(survivor_pl[kill])
+        survivor_el.remove(survivor_el[kill])
 
     survivors = np.array(survivors)
 
-    return(survivors, survivor_fitness)
+    return survivors, survivor_fitness, survivor_pl, survivor_el
 
 
 def choose_sorted_pairs(parents, parents_f, i, pop_size):
@@ -119,7 +130,7 @@ def choose_sorted_pairs(parents, parents_f, i, pop_size):
     Worst parent mates with best parent
     """
 
-    parents, parents_f = sort_population(parents, parents_f)
+    parents, parents_f = sort_population(parents, parents_f, None, None)
     parents = np.array(parents)
 
     parent1 = parents[i]
