@@ -19,9 +19,9 @@ from tournaments import sort_population
 
 BOUND_MAX = 1
 BOUND_MIN = -1
-ENEMY_NR = [4]
+ENEMY_NR = [1, 2, 3, 4, 5, 6, 7, 8]
 
-experiment_name = "EA2_results_EN4"
+experiment_name = "TESTEN"
 if not os.path.exists(experiment_name):
     os.makedirs(experiment_name)
 
@@ -30,7 +30,8 @@ env = Environment(experiment_name = experiment_name,
                   player_controller = player_controller(),
                   level = 2,
                   contacthurt = "player",
-                  savelogs="no")
+                  savelogs="no",
+                  multiplemode="yes")
 
 N_HIDDEN = 10
 N_VARS = (env.get_num_sensors()+1)*N_HIDDEN + (N_HIDDEN+1)*5 # multilayer with 10 hidden neurons
@@ -49,7 +50,6 @@ def run_simulation(env, pop):
         pop_t.append(time)
 
     return pop_f, pop_pl, pop_el, pop_t
-
 
 # evolution process
 def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, mutation_type):
@@ -112,12 +112,12 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
         # add children to population
         new_pop = np.ndarray.tolist(new_pop) + new_pop_children
         new_pop_f = new_pop_f + new_pop_children_f
-        
+
 #        print("NOW POP LENGTH", len(new_pop))
 
         # Choose the survivors, bring pop length to N / 2
         new_pop, new_pop_f = tournaments.choose_survivors(new_pop, new_pop_f)
-        
+
 #        print("NOW POP LENGTH", len(new_pop))
 
         # Only use new population if it has improved
@@ -162,16 +162,17 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
 
 
 def evaluate_best(env, best):
-    pop_f = []
-    pop_pl = []
-    pop_el = []
-    pop_t = []
 
     best = np.asarray(best)
     fitness, player_life, enemy_life, time = env.play(pcont = best)
-    pop_f.append(fitness)
-    pop_pl.append(player_life)
-    pop_el.append(enemy_life)
-    pop_t.append(time)
 
-    return pop_f, pop_pl, pop_el, pop_t
+    return fitness, player_life, enemy_life, time
+
+def fitness_and_gains(fitness, gains):
+    """
+    New fitness function that optimizes for 80% fitness and 20% gains
+    """
+
+    optimize = 0.8 * fitness + 0.2 * generations
+
+    return optimize

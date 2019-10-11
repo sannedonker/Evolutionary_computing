@@ -16,7 +16,6 @@ import tmx
 from player import *
 from controller import Controller
 
-
 # main class
 class Environment(object):
 
