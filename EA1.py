@@ -5,9 +5,9 @@ import numpy as np
 import time
 
 # Parameters
-N = 4
-K = [2]
-NUM_GENERATIONS = 1
+N = 10
+K = [3]
+NUM_GENERATIONS = 15
 CROSSOVER_MIN = 0.5
 CROSSOVER_MAX = 0.9
 MUTATION_SIGMA = 0.5

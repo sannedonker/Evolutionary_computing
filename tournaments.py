@@ -25,8 +25,6 @@ def sort_population(pop, pop_f, pop_pl, pop_el):
     sorting = np.asarray(pop_f).argsort()
     sorted_pop = np.asarray(pop)[sorting]
     sorted_f = np.asarray(pop_f)[sorting]
-    print(bcolors.OKBLUE + str(sorted_f) + bcolors.ENDC)
-    print(len(pop), "populationlength")
 
     sorted_pop = np.ndarray.tolist(sorted_pop)
     sorted_f = np.ndarray.tolist(sorted_f)

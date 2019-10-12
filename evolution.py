@@ -18,7 +18,7 @@ from tournaments import sort_population
 # Parameters
 BOUND_MAX = 1
 BOUND_MIN = -1
-ENEMY_NR = [1, 2, 3, 4, 5, 6, 7, 8]
+ENEMY_NR = [7, 8]
 
 experiment_name = "TESTEN"
 
@@ -47,11 +47,6 @@ env = Environment(experiment_name = experiment_name,
 # Multilayer with 10 hidden neurons
 N_HIDDEN = 10
 N_VARS = (env.get_num_sensors()+1)*N_HIDDEN + (N_HIDDEN+1)*5
-
-
-def ANN_fitness(pop, popf):
-
-    pass
 
 
 def run_simulation(env, pop, nr):
@@ -160,8 +155,6 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
         f_mean.append(np.mean(pop_f))
 
         # Compute gains
-        print(bcolors.WARNING + str(pop_el) + bcolors.ENDC)
-
         gains = []
         pl = []
         el = []
@@ -177,8 +170,6 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
     pop_sorted, pop_f_sorted, pop_pl_sorted, pop_el_sorted = sort_population(pop, pop_f, pop_pl, pop_el)
     best_pop_f, best_pop_pl, best_pop_el = evaluate_best(env, pop_sorted[-1])
 
-    print(bcolors.WARNING + str(best_pop_f) + bcolors.ENDC)
-
     # saves results for best population
     file_aux = open(experiment_name + "/results.txt", "a")
     file_aux.write(str(pop_sorted[-1]) + str(pop_f_sorted[-1]) + "\n")
@@ -189,6 +180,8 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
     file_aux.write(time.strftime("%d-%m %H:%M ", time.localtime()) + "\n" + "Max: " + str(f_max) + "\n" + "Mean: " + str(f_mean) + "\n")
     file_aux.write("Gains:" + str(gains) + "\n" + "Enemylife:" + str(pop_el) + "\n" + "Playerlife:" + str(pop_pl) + "\n")
     file_aux
+
+    print("Max fitness: " + str(f_max) + " Gains: " + str(gains))
 
     return f_max, f_mean, pop_sorted[-1], best_pop_f, best_pop_pl, best_pop_el
 
@@ -203,11 +196,28 @@ def evaluate_best(env, best):
 
     return fitness, player_life, enemy_life
 
-def fitness_and_gains(fitness, gains):
+def test_for_all(env, best_sol):
     """
-    New fitness function that optimizes for 80% fitness and 20% gains
+    Test the best solution for all enemies
     """
 
-    optimize = 0.8 * fitness + 0.2 * generations
+    pl = 0
+    el = 0
+    wins = 0
+    for i in range(8):
+        env = Environment(experiment_name = experiment_name,
+                              enemies = [i + 1],
+                              player_controller = player_controller(),
+                              multiplemode = "no")
+        evalutaion = evaluate_best(env, bsol)
 
-    return optimize
+        pl += evalutaion[1]
+        el += evalutaion[2]
+        if pl > el:
+            wins += 1
+
+    # save number of wins and gains in a file
+    file_aux = open(experiment_name + "/all_enemies.txt", "a")
+    file_aux.write(time.strftime("%d-%m %H:%M ", time.localtime()) + "\n")
+    file_aux.write("Wins: " + str(wins) + " Gains: " + str(pl - el) "\n")
+    file_aux
