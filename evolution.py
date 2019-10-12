@@ -2,7 +2,7 @@ import sys, os
 sys.path.insert(0, "evoman")
 
 from demo_controller import player_controller
-from environment import Environment
+from environmentclass import Environment
 from analyse import plot
 from rank_selection import rank_selection
 from mutations import uni_mutation, scramble_mutation
@@ -18,9 +18,15 @@ from tournaments import sort_population
 # Parameters
 BOUND_MAX = 1
 BOUND_MIN = -1
-ENEMY_NR = [7, 8]
+
+
+# Multilayer with 10 hidden neurons
+N_HIDDEN = 10
+
+ENEMY_NR = [1, 2, 3, 4, 5, 6, 7, 8]
 
 experiment_name = "TESTEN"
+
 
 
 class bcolors:
@@ -34,19 +40,11 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 
-experiment_name = "ANN1_2"
+experiment_name = "ANN1"
 
 if not os.path.exists(experiment_name):
     os.makedirs(experiment_name)
 
-env = Environment(experiment_name = experiment_name,
-                  enemies = ENEMY_NR,
-                  player_controller = player_controller(),
-                  multiplemode = "yes")
-
-# Multilayer with 10 hidden neurons
-N_HIDDEN = 10
-N_VARS = (env.get_num_sensors()+1)*N_HIDDEN + (N_HIDDEN+1)*5
 
 
 def run_simulation(env, pop, nr):
@@ -57,6 +55,7 @@ def run_simulation(env, pop, nr):
     pop_pl = []
     pop_el = []
 
+
     for individual in pop:
         fitness, player_life, enemy_life, time = env.play(pcont=individual)
         pop_f.append(fitness)
@@ -66,7 +65,7 @@ def run_simulation(env, pop, nr):
     return pop_f, pop_pl, pop_el
 
 
-def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, mutation_type):
+def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, mutation_type, enemies):
     """
     EVOLUTION PROCESS:
     Fitness calculation > mating pool > parents selection,
@@ -74,6 +73,13 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
     """
 
     nr = 0
+
+    env = Environment(experiment_name = experiment_name,
+                      enemies = enemies,
+                      player_controller = player_controller(),
+                      multiplemode = "yes")
+
+    N_VARS = (env.get_num_sensors()+1)*N_HIDDEN + (N_HIDDEN+1)*5
 
     # Start with random population
     pop = np.random.uniform(BOUND_MIN, BOUND_MAX, (N, N_VARS))
@@ -154,7 +160,6 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
         f_max.append(max(pop_f))
         f_mean.append(np.mean(pop_f))
 
-        # Compute gains
         gains = []
         pl = []
         el = []
@@ -162,7 +167,6 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
             gains.append(pop_pl[j] - pop_el[j])
             el.append(pop_el)
             pl.append(pop_pl)
-        print(gains, "GAINS")
         # gains = pop_el - pop_pl
         # print(bcolors.HEADER + str(gains) + bcolors.ENDC)
 
@@ -177,7 +181,7 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
 
     # Save array of max values
     file_aux = open(experiment_name + "/maxvalues.txt", "a")
-    file_aux.write(time.strftime("%d-%m %H:%M ", time.localtime()) + "\n" + "Max: " + str(f_max) + "\n" + "Mean: " + str(f_mean) + "\n")
+    file_aux.write(time.strftime("%d-%m %H:%M ", time.localtime()) + str(enemies) + "\n" + "Max: " + str(f_max) + "\n" + "Mean: " + str(f_mean) + "\n")
     file_aux.write("Gains:" + str(gains) + "\n" + "Enemylife:" + str(pop_el) + "\n" + "Playerlife:" + str(pop_pl) + "\n")
     file_aux
 
@@ -196,7 +200,7 @@ def evaluate_best(env, best):
 
     return fitness, player_life, enemy_life
 
-def test_for_all(env, best_sol):
+def test_for_all(best_sol, experiment_name):
     """
     Test the best solution for all enemies
     """
@@ -209,7 +213,7 @@ def test_for_all(env, best_sol):
                               enemies = [i + 1],
                               player_controller = player_controller(),
                               multiplemode = "no")
-        evalutaion = evaluate_best(env, bsol)
+        evalutaion = evaluate_best(env, best_sol)
 
         pl += evalutaion[1]
         el += evalutaion[2]
@@ -219,5 +223,5 @@ def test_for_all(env, best_sol):
     # save number of wins and gains in a file
     file_aux = open(experiment_name + "/all_enemies.txt", "a")
     file_aux.write(time.strftime("%d-%m %H:%M ", time.localtime()) + "\n")
-    file_aux.write("Wins: " + str(wins) + " Gains: " + str(pl - el) "\n")
+    file_aux.write("Wins: " + str(wins) + " Gains: " + str(pl - el) + "\n")
     file_aux
