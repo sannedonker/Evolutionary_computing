@@ -24,7 +24,7 @@ if not os.path.exists(experiment_name):
 env = Environment(experiment_name=experiment_name,
 				  playermode="ai",
 				  player_controller=player_controller(),
-			  	  speed="normal",
+			  	  speed="fastest",
 				  enemymode="static",
 				  level=2)
 

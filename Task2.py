@@ -13,14 +13,14 @@ CROSSOVER_MAX = 0.9
 MUTATION_SIGMA = 0.5
 MUTATION_CHANCE = 0.15
 parent_select_type = "kway"
-mutation_type = "uni"
+mutation_type = "scramble"
 RUNS = 10
-ENEMIES = [[2, 4, 7], [7, 8], [1, 2, 3, 4, 5, 6, 7, 8]]
+ENEMIES = [[1, 2, 3, 4, 5, 6, 7, 8]]
 
 # ______TESTING PARAMETERS_______
 # N = 4
 # K = 2
-# NUM_GENERATIONS = 2
+# NUM_GENERATIONS = 1
 # CROSSOVER_MIN = 0.5
 # CROSSOVER_MAX = 0.9
 # MUTATION_SIGMA = 0.5
@@ -36,7 +36,7 @@ if __name__ == "__main__":
 
     for enemy in ENEMIES:
 
-        experiment_name = "ENEMY_COMBINATION_" + str(enemy)
+        experiment_name = "EA2_" + str(enemy)
 
         for i in range(RUNS):
 
@@ -53,8 +53,9 @@ if __name__ == "__main__":
             file_aux.close()
 
             file_aux = open(experiment_name + "/maxvalues.txt", "a")
-            file_aux.write(time.strftime("\n" + "%d-%m %H:%M ", time.localtime()) + "\n"+ str(enemy) + "\n" + "BEST fitness: " + str(best_pop_f) +  "\n")
+            file_aux.write("\n"+ str(enemy) + "\n" + "BEST fitness: " + str(best_pop_f) +  "\n")
             file_aux.write("Enemylife: " + str(best_pop_el) + "\n" + "Playerlife: " + str(best_pop_pl) + "\n")
+            file_aux.write("\n")
             file_aux.close()
 
             test_for_all(best_pop, experiment_name)

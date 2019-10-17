@@ -1,0 +1,67 @@
+
+
+MESSAGE: Pygame initialized for simulation.
+
+########## Simulation state - INI ###########
+
+# solutions # : EMPTY 
+
+# sensors # : 20
+
+ ------  parameters ------  
+
+# contact hurt (training agent) # : player
+
+multiple mode: yes
+
+enemies list: 1 2 3 4 5 6 7 8
+
+current enemy: 1
+
+player mode: ai
+
+enemy mode: static
+
+level: 2
+
+clock precision: low
+
+inputs coded: no
+
+random initialization: no
+
+expiration time: 3000
+
+speed: fastest
+
+load player: yes
+
+load enemy: yes
+
+sound: on
+
+overture time: 100
+
+logs: on
+
+save logs: yes
+
+########## Simulation state - END ###########
+
+PARAMETER CHANGE: speed = fastest
+
+RUN: run status: enemy: 1; fitness: 75.20394224923463; player life: 0; enemy life: 10.0; time: 329
+
+RUN: run status: enemy: 2; fitness: 92.64704041507838; player life: 82; enemy life: 0; time: 258
+
+RUN: run status: enemy: 3; fitness: 74.77544157072464; player life: 0; enemy life: 10.0; time: 505
+
+RUN: run status: enemy: 4; fitness: 65.3432734758216; player life: 0; enemy life: 20.0; time: 778
+
+RUN: run status: enemy: 5; fitness: 90.91067522005318; player life: 67.6000000000003; enemy life: 0; time: 347
+
+RUN: run status: enemy: 6; fitness: 12.3062678611973; player life: 0; enemy life: 80.0; time: 297
+
+RUN: run status: enemy: 7; fitness: 66.9001335721758; player life: 0; enemy life: 20.0; time: 164
+
+RUN: run status: enemy: 8; fitness: 89.29279945145866; player life: 55.60000000000032; enemy life: 0; time: 527

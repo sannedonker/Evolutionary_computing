@@ -26,7 +26,7 @@ if not os.path.exists(experiment_name):
 
 # initializes simulation in multi evolution mode, for multiple static enemies.
 env = Environment(experiment_name=experiment_name,
-                  enemies=[7,8],
+                  enemies=[1, 2, 3, 4, 5, 6, 7,8],
                   multiplemode="yes",
                   playermode="ai",
                   player_controller=player_controller(),
@@ -46,14 +46,14 @@ ini = time.time()  # sets time marker
 
 # genetic algorithm params
 
-run_mode = 'train' # train or test
+run_mode = 'test' # train or test
 
 n_hidden = 10
 n_vars = (env.get_num_sensors()+1)*n_hidden + (n_hidden+1)*5 # multilayer with 10 hidden neurons
 dom_u = 1
 dom_l = -1
-npop = 100
-gens = 30
+npop = 10
+gens = 3
 mutation = 0.2
 last_best = 0
 
@@ -160,9 +160,10 @@ def doomsday(pop,fit_pop):
 # loads file with the best solution for testing
 if run_mode =='test':
 
-    bsol = np.loadtxt(experiment_name+'/best.txt')
+    # bsol = np.loadtxt(experiment_name+'/best.txt')
+    bsol = np.loadtxt("42.txt")
     print( '\n RUNNING SAVED BEST SOLUTION \n')
-    env.update_parameter('speed','normal')
+    env.update_parameter('speed','fastest')
     evaluate([bsol])
 
     sys.exit(0)

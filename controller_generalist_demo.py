@@ -27,14 +27,15 @@ env = Environment(experiment_name=experiment_name,
 				  enemymode="static",
 				  level=2)
 
-sol = np.loadtxt('solutions_demo/demo_all.txt')
+# sol = np.loadtxt('solutions_demo/demo_all.txt')
+sol = np.loadtxt('best_solution_group_42.txt')
 print('\n LOADING SAVED GENERALIST SOLUTION FOR ALL ENEMIES \n')
 
 # tests saved demo solutions for each enemy
 for en in range(1, 9):
 	# Update the number of neurons for this specific example
 	env.player_controller.n_hidden = [0]
-	
+
 	#Update the enemy
 	env.update_parameter('enemies',[en])
 
