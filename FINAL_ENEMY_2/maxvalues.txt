@@ -1,0 +1,200 @@
+BEST fitness: [90.84704041507838]Gains: [64]
+Enemylife: [0]
+Playerlife: [64]
+
+BEST fitness: [90.84704041507838]Gains: [64]
+Enemylife: [0]
+Playerlife: [64]
+
+BEST fitness: [90.84704041507838]Gains: [64]
+Enemylife: [0]
+Playerlife: [64]
+
+BEST fitness: [90.84704041507838]Gains: [64]
+Enemylife: [0]
+Playerlife: [64]
+
+BEST fitness: [90.84704041507838]Gains: [64]
+Enemylife: [0]
+Playerlife: [64]
+
+BEST fitness: [90.48200618758324]Gains: [56]
+Enemylife: [0]
+Playerlife: [56]
+
+BEST fitness: [90.48200618758324]Gains: [56]
+Enemylife: [0]
+Playerlife: [56]
+
+BEST fitness: [90.48200618758324]Gains: [56]
+Enemylife: [0]
+Playerlife: [56]
+
+BEST fitness: [90.48200618758324]Gains: [56]
+Enemylife: [0]
+Playerlife: [56]
+
+BEST fitness: [90.48200618758324]Gains: [56]
+Enemylife: [0]
+Playerlife: [56]
+
+BEST fitness: [91.77237888630937]Gains: [74]
+Enemylife: [0]
+Playerlife: [74]
+
+BEST fitness: [91.77237888630937]Gains: [74]
+Enemylife: [0]
+Playerlife: [74]
+
+BEST fitness: [91.77237888630937]Gains: [74]
+Enemylife: [0]
+Playerlife: [74]
+
+BEST fitness: [91.77237888630937]Gains: [74]
+Enemylife: [0]
+Playerlife: [74]
+
+BEST fitness: [91.77237888630937]Gains: [74]
+Enemylife: [0]
+Playerlife: [74]
+
+BEST fitness: [91.88657125383503]Gains: [74]
+Enemylife: [0]
+Playerlife: [74]
+
+BEST fitness: [91.88657125383503]Gains: [74]
+Enemylife: [0]
+Playerlife: [74]
+
+BEST fitness: [91.88657125383503]Gains: [74]
+Enemylife: [0]
+Playerlife: [74]
+
+BEST fitness: [91.88657125383503]Gains: [74]
+Enemylife: [0]
+Playerlife: [74]
+
+BEST fitness: [91.88657125383503]Gains: [74]
+Enemylife: [0]
+Playerlife: [74]
+
+BEST fitness: [66.50693855665945]Gains: [-20.0]
+Enemylife: [20.0]
+Playerlife: [0]
+
+BEST fitness: [66.50693855665945]Gains: [-20.0]
+Enemylife: [20.0]
+Playerlife: [0]
+
+BEST fitness: [66.50693855665945]Gains: [-20.0]
+Enemylife: [20.0]
+Playerlife: [0]
+
+BEST fitness: [66.50693855665945]Gains: [-20.0]
+Enemylife: [20.0]
+Playerlife: [0]
+
+BEST fitness: [66.50693855665945]Gains: [-20.0]
+Enemylife: [20.0]
+Playerlife: [0]
+
+BEST fitness: [92.64704041507838]Gains: [82]
+Enemylife: [0]
+Playerlife: [82]
+
+BEST fitness: [92.64704041507838]Gains: [82]
+Enemylife: [0]
+Playerlife: [82]
+
+BEST fitness: [92.64704041507838]Gains: [82]
+Enemylife: [0]
+Playerlife: [82]
+
+BEST fitness: [92.64704041507838]Gains: [82]
+Enemylife: [0]
+Playerlife: [82]
+
+BEST fitness: [92.64704041507838]Gains: [82]
+Enemylife: [0]
+Playerlife: [82]
+
+BEST fitness: [91.77237888630937]Gains: [74]
+Enemylife: [0]
+Playerlife: [74]
+
+BEST fitness: [91.77237888630937]Gains: [74]
+Enemylife: [0]
+Playerlife: [74]
+
+BEST fitness: [91.77237888630937]Gains: [74]
+Enemylife: [0]
+Playerlife: [74]
+
+BEST fitness: [91.77237888630937]Gains: [74]
+Enemylife: [0]
+Playerlife: [74]
+
+BEST fitness: [91.77237888630937]Gains: [74]
+Enemylife: [0]
+Playerlife: [74]
+
+BEST fitness: [91.07603602059675]Gains: [62]
+Enemylife: [0]
+Playerlife: [62]
+
+BEST fitness: [91.07603602059675]Gains: [62]
+Enemylife: [0]
+Playerlife: [62]
+
+BEST fitness: [91.07603602059675]Gains: [62]
+Enemylife: [0]
+Playerlife: [62]
+
+BEST fitness: [91.07603602059675]Gains: [62]
+Enemylife: [0]
+Playerlife: [62]
+
+BEST fitness: [91.07603602059675]Gains: [62]
+Enemylife: [0]
+Playerlife: [62]
+
+BEST fitness: [91.84704041507838]Gains: [74]
+Enemylife: [0]
+Playerlife: [74]
+
+BEST fitness: [91.84704041507838]Gains: [74]
+Enemylife: [0]
+Playerlife: [74]
+
+BEST fitness: [91.84704041507838]Gains: [74]
+Enemylife: [0]
+Playerlife: [74]
+
+BEST fitness: [91.84704041507838]Gains: [74]
+Enemylife: [0]
+Playerlife: [74]
+
+BEST fitness: [91.84704041507838]Gains: [74]
+Enemylife: [0]
+Playerlife: [74]
+
+BEST fitness: [92.32700044143624]Gains: [76]
+Enemylife: [0]
+Playerlife: [76]
+
+BEST fitness: [92.32700044143624]Gains: [76]
+Enemylife: [0]
+Playerlife: [76]
+
+BEST fitness: [92.32700044143624]Gains: [76]
+Enemylife: [0]
+Playerlife: [76]
+
+BEST fitness: [92.32700044143624]Gains: [76]
+Enemylife: [0]
+Playerlife: [76]
+
+BEST fitness: [92.32700044143624]Gains: [76]
+Enemylife: [0]
+Playerlife: [76]
+
