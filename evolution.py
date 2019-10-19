@@ -54,6 +54,32 @@ def run_simulation(env, pop, nr):
     return pop_f, pop_pl, pop_el
 
 
+def final_test(beginpop, enemy_nr):
+    """
+    EVOLUTION PROCESS:
+    Fitness calculation > mating pool > parents selection,
+    Mating (crossover and mutation) > offspring.
+    """
+    env = Environment(experiment_name = experiment_name,
+                      enemies = [enemy_nr],
+                      player_controller = player_controller())
+
+    N_VARS = (env.get_num_sensors()+1)*N_HIDDEN + (N_HIDDEN+1)*5
+
+    # Start with population
+    pop = beginpop
+    pop_f, pop_pl, pop_el = run_simulation(env, pop)
+
+    gains = []
+    pl = []
+    el = []
+    for j in range(len(pop_pl)):
+        gains.append(pop_pl[j] - pop_el[j])
+        el.append(pop_el)
+        pl.append(pop_pl)
+
+    return pop, pop_f, pop_pl, pop_el, gains
+
 def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, mutation_type, enemies):
     """
     EVOLUTION PROCESS:
@@ -66,6 +92,7 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
         os.makedirs(experiment_name)
 
     nr = 0
+    print(enemies)
 
     env = Environment(experiment_name = experiment_name,
                       enemies = enemies,
@@ -166,7 +193,7 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
         best_pop_f, best_pop_pl, best_pop_el = evaluate_best(env, pop_sorted[-1])
 
         # saves results for best population
-        file_aux = open(experiment_name + "/results.txt", "a")
+        file_aux = open(experiment_name + "/allresults.txt", "a")
         file_aux.write(str(pop_sorted[-1]) + str(pop_f_sorted[-1]) + "\n")
         file_aux.close()
 

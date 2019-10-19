@@ -1,0 +1,200 @@
+BEST fitness: [75.20394224923463]Gains: [-10.0]
+Enemylife: [10.0]
+Playerlife: [0]
+
+BEST fitness: [75.20394224923463]Gains: [-10.0]
+Enemylife: [10.0]
+Playerlife: [0]
+
+BEST fitness: [75.20394224923463]Gains: [-10.0]
+Enemylife: [10.0]
+Playerlife: [0]
+
+BEST fitness: [75.20394224923463]Gains: [-10.0]
+Enemylife: [10.0]
+Playerlife: [0]
+
+BEST fitness: [75.20394224923463]Gains: [-10.0]
+Enemylife: [10.0]
+Playerlife: [0]
+
+BEST fitness: [66.57065437104556]Gains: [-20.0]
+Enemylife: [20.0]
+Playerlife: [0]
+
+BEST fitness: [66.57065437104556]Gains: [-20.0]
+Enemylife: [20.0]
+Playerlife: [0]
+
+BEST fitness: [66.57065437104556]Gains: [-20.0]
+Enemylife: [20.0]
+Playerlife: [0]
+
+BEST fitness: [66.57065437104556]Gains: [-20.0]
+Enemylife: [20.0]
+Playerlife: [0]
+
+BEST fitness: [66.57065437104556]Gains: [-20.0]
+Enemylife: [20.0]
+Playerlife: [0]
+
+BEST fitness: [91.40814186652396]Gains: [67.6000000000003]
+Enemylife: [0]
+Playerlife: [67.6000000000003]
+
+BEST fitness: [91.40814186652396]Gains: [67.6000000000003]
+Enemylife: [0]
+Playerlife: [67.6000000000003]
+
+BEST fitness: [91.40814186652396]Gains: [67.6000000000003]
+Enemylife: [0]
+Playerlife: [67.6000000000003]
+
+BEST fitness: [91.40814186652396]Gains: [67.6000000000003]
+Enemylife: [0]
+Playerlife: [67.6000000000003]
+
+BEST fitness: [91.40814186652396]Gains: [67.6000000000003]
+Enemylife: [0]
+Playerlife: [67.6000000000003]
+
+BEST fitness: [65.8015212835077]Gains: [-20.0]
+Enemylife: [20.0]
+Playerlife: [0]
+
+BEST fitness: [65.8015212835077]Gains: [-20.0]
+Enemylife: [20.0]
+Playerlife: [0]
+
+BEST fitness: [65.8015212835077]Gains: [-20.0]
+Enemylife: [20.0]
+Playerlife: [0]
+
+BEST fitness: [65.8015212835077]Gains: [-20.0]
+Enemylife: [20.0]
+Playerlife: [0]
+
+BEST fitness: [65.8015212835077]Gains: [-20.0]
+Enemylife: [20.0]
+Playerlife: [0]
+
+BEST fitness: [66.57946500072771]Gains: [-20.0]
+Enemylife: [20.0]
+Playerlife: [0]
+
+BEST fitness: [66.57946500072771]Gains: [-20.0]
+Enemylife: [20.0]
+Playerlife: [0]
+
+BEST fitness: [66.57946500072771]Gains: [-20.0]
+Enemylife: [20.0]
+Playerlife: [0]
+
+BEST fitness: [66.57946500072771]Gains: [-20.0]
+Enemylife: [20.0]
+Playerlife: [0]
+
+BEST fitness: [66.57946500072771]Gains: [-20.0]
+Enemylife: [20.0]
+Playerlife: [0]
+
+BEST fitness: [66.9001335721758]Gains: [-20.0]
+Enemylife: [20.0]
+Playerlife: [0]
+
+BEST fitness: [66.9001335721758]Gains: [-20.0]
+Enemylife: [20.0]
+Playerlife: [0]
+
+BEST fitness: [66.9001335721758]Gains: [-20.0]
+Enemylife: [20.0]
+Playerlife: [0]
+
+BEST fitness: [66.9001335721758]Gains: [-20.0]
+Enemylife: [20.0]
+Playerlife: [0]
+
+BEST fitness: [66.9001335721758]Gains: [-20.0]
+Enemylife: [20.0]
+Playerlife: [0]
+
+BEST fitness: [75.1593583426266]Gains: [-10.0]
+Enemylife: [10.0]
+Playerlife: [0]
+
+BEST fitness: [75.1593583426266]Gains: [-10.0]
+Enemylife: [10.0]
+Playerlife: [0]
+
+BEST fitness: [75.1593583426266]Gains: [-10.0]
+Enemylife: [10.0]
+Playerlife: [0]
+
+BEST fitness: [75.1593583426266]Gains: [-10.0]
+Enemylife: [10.0]
+Playerlife: [0]
+
+BEST fitness: [75.1593583426266]Gains: [-10.0]
+Enemylife: [10.0]
+Playerlife: [0]
+
+BEST fitness: [75.4825471035353]Gains: [-10.0]
+Enemylife: [10.0]
+Playerlife: [0]
+
+BEST fitness: [75.4825471035353]Gains: [-10.0]
+Enemylife: [10.0]
+Playerlife: [0]
+
+BEST fitness: [75.4825471035353]Gains: [-10.0]
+Enemylife: [10.0]
+Playerlife: [0]
+
+BEST fitness: [75.4825471035353]Gains: [-10.0]
+Enemylife: [10.0]
+Playerlife: [0]
+
+BEST fitness: [75.4825471035353]Gains: [-10.0]
+Enemylife: [10.0]
+Playerlife: [0]
+
+BEST fitness: [75.29288973525112]Gains: [-10.0]
+Enemylife: [10.0]
+Playerlife: [0]
+
+BEST fitness: [75.29288973525112]Gains: [-10.0]
+Enemylife: [10.0]
+Playerlife: [0]
+
+BEST fitness: [75.29288973525112]Gains: [-10.0]
+Enemylife: [10.0]
+Playerlife: [0]
+
+BEST fitness: [75.29288973525112]Gains: [-10.0]
+Enemylife: [10.0]
+Playerlife: [0]
+
+BEST fitness: [75.29288973525112]Gains: [-10.0]
+Enemylife: [10.0]
+Playerlife: [0]
+
+BEST fitness: [75.47057091248858]Gains: [-10.0]
+Enemylife: [10.0]
+Playerlife: [0]
+
+BEST fitness: [75.47057091248858]Gains: [-10.0]
+Enemylife: [10.0]
+Playerlife: [0]
+
+BEST fitness: [75.47057091248858]Gains: [-10.0]
+Enemylife: [10.0]
+Playerlife: [0]
+
+BEST fitness: [75.47057091248858]Gains: [-10.0]
+Enemylife: [10.0]
+Playerlife: [0]
+
+BEST fitness: [75.47057091248858]Gains: [-10.0]
+Enemylife: [10.0]
+Playerlife: [0]
+
