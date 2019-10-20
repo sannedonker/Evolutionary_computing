@@ -92,7 +92,7 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
     totalel = []
     totalf = []
 
-    experiment_name = "EA1_TEST" + str(enemies)
+    experiment_name = "EA1_" + str(enemies)
     if not os.path.exists(experiment_name):
         os.makedirs(experiment_name)
 
