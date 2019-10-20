@@ -14,22 +14,22 @@ MUTATION_SIGMA = 0.5
 MUTATION_CHANCE = 0.15
 parent_select_type = "kway"
 mutation_type = "uni"
-RUNS = 1
+RUNS = 9
 enemy = [1, 2, 3, 4, 5, 6, 7, 8]
 
 
 # ______TESTING PARAMETERS_______
-# N = 2
-# K = 2
-# NUM_GENERATIONS = 1
-# CROSSOVER_MIN = 0.5
-# CROSSOVER_MAX = 0.9
-# MUTATION_SIGMA = 0.5
-# MUTATION_CHANCE = 0.15
-# parent_select_type = "kway"
-# mutation_type = "uni"
-# RUNS = 1
-# ENEMIES = [1, 2, 3, 4, 5, 6, 7, 8]
+N = 2
+K = 2
+NUM_GENERATIONS = 3
+CROSSOVER_MIN = 0.5
+CROSSOVER_MAX = 0.9
+MUTATION_SIGMA = 0.5
+MUTATION_CHANCE = 0.15
+parent_select_type = "kway"
+mutation_type = "uni"
+RUNS = 1
+ENEMIES = [1, 2, 3, 4, 5, 6, 7, 8]
 
 
 # experiment_name = "ENEMY_COMBINATION_"

@@ -87,7 +87,12 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
     Mating (crossover and mutation) > offspring.
     """
 
-    experiment_name = "EA1_ALLVALUES" + str(enemies)
+    totalgains = []
+    totalpl = []
+    totalel = []
+    totalf = []
+
+    experiment_name = "EA1_TEST" + str(enemies)
     if not os.path.exists(experiment_name):
         os.makedirs(experiment_name)
 
@@ -97,7 +102,8 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
     env = Environment(experiment_name = experiment_name,
                       enemies = enemies,
                       player_controller = player_controller(),
-                      multiplemode = "yes")
+                      multiplemode = "yes",
+                      savelogs = "no")
 
     N_VARS = (env.get_num_sensors()+1)*N_HIDDEN + (N_HIDDEN+1)*5
 
@@ -180,31 +186,42 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
         f_max.append(max(pop_f))
         f_mean.append(np.mean(pop_f))
 
-        gains = []
-        pl = []
-        el = []
-        for j in range(len(pop_pl)):
-            gains.append(pop_pl[j] - pop_el[j])
-            el.append(pop_el)
-            pl.append(pop_pl)
+        # gains = []
+        # pl = []
+        # el = []
+        # for j in range(len(pop_pl)):
+        #     gains.append(pop_pl[j] - pop_el[j])
+        #     el.append(pop_el)
+        #     pl.append(pop_pl)
 
         # Sort population to get individual with highest fitness
         pop_sorted, pop_f_sorted, pop_pl_sorted, pop_el_sorted = sort_population(pop, pop_f, pop_pl, pop_el)
         best_pop_f, best_pop_pl, best_pop_el = evaluate_best(env, pop_sorted[-1])
+
+        totalf.append(best_pop_f)
+        totalel.append(best_pop_el)
+        totalpl.append(best_pop_pl)
+        totalgains.append(best_pop_pl - best_pop_el)
 
         # saves results for best population
         file_aux = open(experiment_name + "/allresults.txt", "a")
         file_aux.write(str(pop_sorted[-1]) + str(pop_f_sorted[-1]) + "\n")
         file_aux.close()
 
+        # saves results for best population
+        file_aux = open(experiment_name + "/valuesovertime.txt", "a")
+        file_aux.write(str(best_pop_f) + "\n" + str(best_pop_pl) + "\n" + str(best_pop_el) + "\n" + str(best_pop_pl-best_pop_el))
+        file_aux.close()
+
+
     # Save array of max values
     file_aux = open(experiment_name + "/maxvalues.txt", "a")
     file_aux.write(time.strftime("%d-%m %H:%M ", time.localtime()) + str(enemies) + "\n" + "Max: " + str(f_max) + "\n" + "Mean: " + str(f_mean) + "\n")
-    file_aux.write("Gains:" + str(gains) + "\n" + "Enemylife:" + str(pop_el) + "\n" + "Playerlife:" + str(pop_pl) + "\n")
-    file_aux.write("Mean of max: " + str(np.mean(f_max)) + "\n" + "Mean of mean: " + str(np.mean(f_mean)) + "\n" + "Mean of gains: " + str(np.mean(gains)) + "\n")
+    file_aux.write("Gains:" + str(totalgains) + "\n" + "Enemylife:" + str(totalel) + "\n" + "Playerlife:" + str(totalpl) + "\n" + "Bestf: "+ str(totalf) + "\n")
+    file_aux.write("Mean of max: " + str(np.mean(f_max)) + "\n" + "Mean of mean: " + str(np.mean(f_mean)) + "\n" + "Mean of gains: " + str(np.mean(totalgains)) + "\n")
     file_aux.close()
 
-    print("Max fitness: " + str(f_max) + " Gains: " + str(gains))
+    print("Max fitness: " + str(f_max) + " Gains: " + str(totalgains))
 
     return f_max, f_mean, pop_sorted[-1], best_pop_f, best_pop_pl, best_pop_el
 
