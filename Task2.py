@@ -5,7 +5,7 @@ import numpy as np
 import time
 
 # Parameters
-N = 100
+N = 60
 K = 20
 NUM_GENERATIONS = 15
 CROSSOVER_MIN = 0.5
