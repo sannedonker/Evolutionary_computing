@@ -18,7 +18,7 @@ from tournaments import sort_population
 # Parameters
 BOUND_MAX = 1
 BOUND_MIN = -1
-
+experiment_name = "EA1_ALLVALUES[1, 2, 3, 4, 5, 6, 7, 8]"
 
 # Multilayer with 10 hidden neurons
 N_HIDDEN = 10
@@ -92,7 +92,7 @@ def evolution_process(N, K, num_gens, cmin, cmax, sigma, chance, selection, muta
     totalel = []
     totalf = []
 
-    experiment_name = "EA1_" + str(enemies)
+    experiment_name = "EA2_" + str(enemies)
     if not os.path.exists(experiment_name):
         os.makedirs(experiment_name)
 
@@ -232,7 +232,7 @@ def evaluate_best(env, best):
     """
 
     best = np.asarray(best)
-    fitness, player_life, enemy_life, time = env.play(pcont = best)
+    fitness, player_life, enemy_life, time = env.play(pcont=best)
 
     return fitness, player_life, enemy_life
 
@@ -260,39 +260,42 @@ def test_for_all(bsol, experiment_name):
     file_aux = open(experiment_name + "/all_enemies.txt", "a")
     file_aux.write(time.strftime("%d-%m %H:%M ", time.localtime()) + "\n")
     file_aux.write("Wins: " + str(wins) + " Gains: " + str(pl - el) + "\n")
-    file_aux
 
 
-def test_for_all_list(solution_list):
+def test_for_all_list(solution):
     """
     Test the best solution for all enemies
     """
 
+    means = []
 
-    wins_list = []
-    gains_list = []
-    for solution in solution_list:
+    for i in range(8):
 
-        pl = 0
-        el = 0
-        wins = 0
-        for i in range(8):
-            env = Environment(experiment_name = experiment_name,
-                                  enemies = [i + 1],
-                                  player_controller = player_controller(),
-                                  multiplemode = "no")
+        print(i, "ENEMY NR")
+        env = Environment(experiment_name = experiment_name,
+                              enemies = [i + 1],
+                              player_controller = player_controller(),
+                              multiplemode = "no")
+
+        # Repeat 5 times for this enemy
+        for h in range(5):
+
+            gains_list = []
+
             evaluation = evaluate_best(env, solution)
 
-            pl += evaluation[1]
-            el += evaluation[2]
-            if evaluation[2] == 0:
-                wins += 1
+            pl = evaluation[1]
+            el = evaluation[2]
 
-        wins_list.append(wins)
-        gains_list.append(pl - el)
+            gains_list.append(pl - el)
+            print(gains_list)
 
-    print(wins_list)
-    print(gains_list)
+        means.append(np.mean(gains_list))
+        print(means, "MEANS")
+
+    print(means, "GAINS")
+    return means
+
 
 # bsols =
 # individual_3 = []

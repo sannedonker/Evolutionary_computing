@@ -5,31 +5,31 @@ import numpy as np
 import time
 
 # Parameters
-N = 60
-K = 20
-NUM_GENERATIONS = 15
-CROSSOVER_MIN = 0.5
-CROSSOVER_MAX = 0.9
-MUTATION_SIGMA = 0.5
-MUTATION_CHANCE = 0.15
-parent_select_type = "kway"
-mutation_type = "uni"
-RUNS = 10
-enemy = [1, 2, 3, 4, 5, 6, 7, 8]
-
-
-# ______TESTING PARAMETERS_______
-# N = 2
-# K = 2
-# NUM_GENERATIONS = 3
+# N = 100
+# K = 20
+# NUM_GENERATIONS = 15
 # CROSSOVER_MIN = 0.5
 # CROSSOVER_MAX = 0.9
 # MUTATION_SIGMA = 0.5
 # MUTATION_CHANCE = 0.15
 # parent_select_type = "kway"
 # mutation_type = "uni"
-# RUNS = 1
-# ENEMIES = [1, 2, 3, 4, 5, 6, 7, 8]
+# RUNS = 10
+# enemy = [1, 2, 3, 4, 5, 6, 7, 8]
+
+
+# ______TESTING PARAMETERS_______
+N = 2
+K = 2
+NUM_GENERATIONS = 3
+CROSSOVER_MIN = 0.5
+CROSSOVER_MAX = 0.9
+MUTATION_SIGMA = 0.5
+MUTATION_CHANCE = 0.15
+parent_select_type = "kway"
+mutation_type = "scramble"
+RUNS = 5
+enemy = [1, 2, 3, 4, 5, 6, 7, 8]
 
 
 # experiment_name = "ENEMY_COMBINATION_"
@@ -37,7 +37,7 @@ enemy = [1, 2, 3, 4, 5, 6, 7, 8]
 # Experiment
 if __name__ == "__main__":
 
-    experiment_name = "EA1_ALLVALUES" + str(enemy)
+    experiment_name = "EA2_ALLVALUES" + str(enemy)
     if not os.path.exists(experiment_name):
         os.makedirs(experiment_name)
 
@@ -83,4 +83,4 @@ if __name__ == "__main__":
     #             file_aux.write("\n")
     #             file_aux.close()
     #
-    #             # test_for_all(best_pop, experiment_name)
+    #             test_for_all(best_pop, experiment_name)

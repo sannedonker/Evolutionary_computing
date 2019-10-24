@@ -1,0 +1,30 @@
+
+[1, 2, 3, 4, 5, 6, 7, 8]
+BEST fitness: -6.107020171222578
+Enemylife: 100.0
+Playerlife: -9.092775993631925
+
+
+[1, 2, 3, 4, 5, 6, 7, 8]
+BEST fitness: -2.977451318626737
+Enemylife: 79.47975189113042
+Playerlife: -8.722481948642388
+
+
+[1, 2, 3, 4, 5, 6, 7, 8]
+BEST fitness: -6.025454567505098
+Enemylife: 100.0
+Playerlife: 0.0
+
+
+[1, 2, 3, 4, 5, 6, 7, 8]
+BEST fitness: 8.002831093280413
+Enemylife: 15.35898384862245
+Playerlife: -10.327089476930372
+
+
+[1, 2, 3, 4, 5, 6, 7, 8]
+BEST fitness: -5.941296412368666
+Enemylife: 100.0
+Playerlife: 0.0
+
