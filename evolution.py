@@ -297,6 +297,16 @@ def test_for_all_list(solution):
     return means
 
 
+best = []
+
+dinges = open("42.txt", "r")
+for line in dinges:
+
+    best.append(line.strip())
+
+print(len(best))
+print(test_for_all_list(best))
+
 # bsols =
 # individual_3 = []
 # individual_6 = []

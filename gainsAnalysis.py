@@ -67,13 +67,11 @@ plotgainsmeans1, plotgainsmeans2 = [], []
 
 
 for sol in total_solutions_all_enemies1:
-    print(sol)
     plotgainsmeans1.append(np.mean(sol))
 
 for sol in total_solutions_all_enemies2:
     plotgainsmeans2.append(np.mean(sol))
 
-print(len(plotgainsmeans1), len(plotgainsmeans2))
 
 plt.ylabel("Gains")
 plt.boxplot([plotgainsmeans1, plotgainsmeans2])
